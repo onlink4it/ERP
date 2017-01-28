@@ -1,0 +1,27 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+
+	<div class="container container-fluid col-md-6 pull-right">
+		<div class="box box-success">
+			<div class="box-header">
+			<h4 class="box-title">تسجيل الدخول</h4>
+			</div>
+			<div class="box-body">
+				<form class="form-horizontal" role="form" action="{% url 'BASE:login_user' %}" method="post" enctype="multipart/form-data">
+			                        {% csrf_token %}
+			                       		<label class="form-label">Username</label>
+			                        	<input type="text" name="username" class="form-control">
+
+			                       		<label class="form-label">Password</label>
+			                        	<input type="password" name="password" class="form-control">
+
+			                   	<div class="form-group">
+			                       		<div class="col-sm-offset-2 col-sm-10">
+			                        		<button type="submit" class="btn btn-success">Login</button>
+			                        	</div>
+			                        </div>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

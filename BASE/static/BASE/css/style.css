@@ -1,0 +1,91 @@
+@font-face {
+    font-family: arabic;
+    src: url(../fonts/hacen_tunisia.ttf);
+}
+body{
+	background: #4b4c9d;
+	font-family: arabic;
+	direction: rtl;
+	margin:0px;
+}
+div.home{
+	/**/
+	color:white;
+	display: inline-block;
+	background-color: #0a87fc;
+	border-radius: 50%;
+	width: 50px;
+	height: 50px;
+	border:3px solid white;
+	font-size: 45px;
+	margin: 20px;
+	font-family: arabic;
+}
+.mainmenu{
+	text-align:center;
+	overflow-y:auto;
+	height:85%;
+}
+.menuitem{
+	text-align:center;
+	overflow: hidden;
+	display:inline-block;
+	width:200px;
+	height:200px;
+	background-color: #0a87fc;
+	color:white;
+	border:3px solid white;
+	margin:20px;
+	border-radius: 20%;
+}
+
+div.icon{
+	
+	text-align:center;
+	overflow: hidden;
+	color:white;
+	
+	font-size: 100px;
+	padding-top:20px;
+	font-family: arabic;
+	border:none;
+
+}
+div.text{
+
+	text-align:center;
+	padding-top:20px;
+	color:white;
+	
+	font-size: 20px;
+	font-family: arabic;
+	border:none;
+}
+a:link{
+	color:white;
+	text-decoration: none;
+}
+a:visited{
+	color:white;
+}
+a:hover{
+	color:black;
+}
+a:active{
+	color:white;
+}
+div.footer{
+	text-align:center;
+	position: fixed;
+	width:300px;
+	height: 30px;
+	background-color: #0a87fc;
+	border-radius: 20px;
+	border:3px solid white;
+	
+	color: white;
+	bottom: 0;
+}
+h1,h2,h3,h4,h5,h6{
+	font-family: arabic;
+}

@@ -1,0 +1,35 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+<div class="mainmenu">
+	<a href="#">
+		<div class="menuitem" style="background-color:red;">
+			<div class="icon">
+				<i class="fa fa-image"></i>
+			</div>
+			<div class="text">
+				إدارة  الفواتير
+			</div>
+		</div>
+	</a>	
+	<a href="{% url 'BASE:add_category' %}">
+		<div class="menuitem" style="background-color:red;">
+			<div class="icon">
+				<i class="fa fa-th"></i>
+			</div>
+			<div class="text">
+				إدارة  تصنيف المنتجات
+			</div>
+		</div>
+	</a>	
+	<a href="{% url 'BASE:add_product' %}">
+		<div class="menuitem" style="background-color:red;">
+			<div class="icon">
+				<i class="fa fa-shopping-cart"></i>
+			</div>
+			<div class="text">
+				إدارة  المنتجات 
+			</div>
+		</div>
+	</a>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+<html>
+	<head>
+		<title>{% block title %}.:: ON-Link ::: BASE ::.{% endblock %}</title>
+		<meta charset="UTF-8">
+		{% load staticfiles %}
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Satisfy">
+		<link rel="stylesheet" type="text/css" href="{% static 'BASE/style.css' %}">
+		  <!-- Tell the browser to be responsive to screen width -->
+		  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		  <!-- Bootstrap 3.3.6 -->
+		  <link rel="stylesheet" href="{% static 'BASE/bootstrap/css/bootstrap.min.css' %}">
+		  <!-- Font Awesome -->
+		  <link rel="stylesheet" href="{% static 'BASE/css/font-awesome.min.css' %}">
+		  <!-- Ionicons -->
+		  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+		  <!-- DataTables -->
+		  <link rel="stylesheet" href="{% static 'BASE/plugins/datatables/dataTables.bootstrap.css' %}">
+		    <!-- Morris chart -->
+  		  <link rel="stylesheet" href="{% static 'BASE/plugins/morris/morris.css' %}">
+		  <!-- Theme style -->
+		  <link rel="stylesheet" href="{% static 'BASE/dist/css/AdminLTE.min.css' %}">
+		  <!-- AdminLTE Skins. Choose a skin from the css/skins
+		       folder instead of downloading all of them to reduce the load. -->
+		  <link rel="stylesheet" href="{% static 'BASE/dist/css/skins/_all-skins.min.css' %}">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="{% static 'BASE/css/style.css' %}">
+	</head>
+	<body>
+		<center>
+			<div class="home" style="background-color: darkorange;"><a href="../"><i class="fa fa-undo"></i></a></div>
+			<div class="home"><a href="{% url 'BASE:index' %}"><i class="fa fa-home"></i></a></div>
+			<div class="home" style="background-color: darkred;"><a href="{% url 'BASE:logout_user' %}"><i class="fa fa-power-off"></i></a></div>
+		</center>
+			{% block body %}
+
+			{% endblock %}
+			<div class="footer">
+				جميع الحقوق محفوظة لشركة اون لينك
+			</div>
+<!-- jQuery 2.2.3 -->
+<script src="{% static 'BASE/plugins/jQuery/jquery-2.2.3.min.js' %}"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="{% static 'BASE/bootstrap/js/bootstrap.min.js' %}"></script>
+<!-- DataTables -->
+<script src="{% static 'BASE/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'BASE/plugins/datatables/dataTables.bootstrap.min.js' %}"></script>
+<!-- SlimScroll -->
+<script src="{% static 'BASE/plugins/slimScroll/jquery.slimscroll.min.js' %}"></script>
+<!-- Morris.js charts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="{% static 'BASE/plugins/morris/morris.min.js' %}"></script>
+<!-- FastClick -->
+<script src="{% static 'BASE/plugins/fastclick/fastclick.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'BASE/dist/js/app.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'BASE/dist/js/demo.js' %}"></script>
+<!-- page script -->
+<script>
+  $(function () {
+    $("#example1").DataTable();
+    $('#example2').DataTable();
+  });
+</script>
+	</body>
+</html>

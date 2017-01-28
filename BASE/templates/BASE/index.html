@@ -1,0 +1,76 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+<div class="mainmenu">
+
+	<a href="{% url 'POS:POS' %}">
+		<div class="menuitem" style="background-color:darkblue;">
+			<div class="icon">
+				<i class="fa fa-money"></i>
+			</div>
+			<div class="text">
+				إدارة الكاشير
+			</div>
+		</div>
+	</a>
+	<a href="#">
+		<div class="menuitem" style="background-color:orange;">
+			<div class="icon">
+				<i class="fa fa-motorcycle"></i>
+			</div>
+			<div class="text">
+				إدارة الدليفرري
+			</div>
+		</div>
+	</a>		
+	<a href="#">
+		<div class="menuitem">
+			<div class="icon">
+				<i class="fa fa-handshake-o"></i>
+			</div>
+			<div class="text">
+				إدارة الموارد البشرية
+			</div>
+		</div>
+	</a>	
+	<a href="#">
+		<div class="menuitem" style="background-color:green;">
+			<div class="icon">
+				<i class="fa fa-book"></i>
+			</div>
+			<div class="text">
+				إدارة الحسابات
+			</div>
+		</div>
+	</a>		
+	<a href="{% url 'BASE:system_setting' %}">
+		<div class="menuitem" style="background-color:red;">
+			<div class="icon">
+				<i class="ion-ios-gear"></i>
+			</div>
+			<div class="text">
+				إدارة البرنامج
+			</div>
+		</div>
+	</a>	
+	<a href="#">
+		<div class="menuitem" style="background-color:magenta">
+			<div class="icon">
+				<i class="fa fa-barcode"></i>
+			</div>
+			<div class="text">
+				إدارة المخزون
+			</div>
+		</div>
+	</a>
+	<a href="#">
+		<div class="menuitem" style="background-color:black">
+			<div class="icon">
+				<i class="fa fa-shopping-cart"></i>
+			</div>
+			<div class="text">
+				إدارة المشتريات
+			</div>
+		</div>
+	</a>
+</div>
+{% endblock %}
