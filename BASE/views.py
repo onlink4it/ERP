@@ -80,16 +80,11 @@ def system_setting(request):
 		for x in authorized_array:
 			if  x == True:
 				authorized = True
-		'''text = authorized_array
-		context = {'text':text}
-		return render(request,"BASE/test.html")'''
 		if authorized == True:
 			context = {'authorized_array':authorized_array}
 			return render(request, "BASE/system_setting.html",context)
 		else:
 			return render(request,"BASE/forbidden.html")
-
-
 
 def user_accounts(request):
 	if not request.user.is_authenticated():
@@ -144,6 +139,39 @@ def user_perm(request,user_id):
 		else:
 			return render(request,"BASE/forbidden.html")
 
+def edit_user_perm(request,user_id):
+	if not request.user.is_authenticated():
+		return render(request, 'BASE/login.html')
+	else:
+		if perm(request,request.user,"is_user_admin") == True:
+			all_emp = User_Admin.objects.all()
+			emp_user = User.objects.get(pk = user_id)
+			form = User_Admin_Form(request.POST or None)
+			if form.is_valid():
+				new_emp = form.save(commit = False)
+				try:
+					emp_exist = User_Admin.objects.get(user = emp_user)
+					emp_exist.is_pos_employee =new_emp.is_pos_employee
+					emp_exist.is_pos_admin =new_emp.is_pos_admin
+					emp_exist.is_delivery_taker =new_emp.is_delivery_taker
+					emp_exist.is_delivery_admin =new_emp.is_delivery_admin
+					emp_exist.is_product_admin =new_emp.is_product_admin
+					emp_exist.is_invoice_admin =new_emp.is_invoice_admin
+					emp_exist.is_purchases_admin =new_emp.is_purchases_admin
+					emp_exist.is_stock_admin =new_emp.is_stock_admin
+					emp_exist.is_user_admin =new_emp.is_user_admin
+					emp_exist.is_accounts_admin =new_emp.is_accounts_admin
+					emp_exist.save()
+					error_message = "تم تعديل صلاحيات الموظف"
+					context = {"form":form,"error_message":error_message,"all_emp":all_emp}
+					return render(request,"BASE/user_perm.html",context)
+				except User_Admin.DoesNotExist:
+					new_emp.user = emp_user
+					new_emp.save()
+			context = {"form":form,"all_emp":all_emp}
+			return render(request,"BASE/user_perm.html",context)
+		else:
+			return render(request,"BASE/forbidden.html")
 
 		
 def add_category(request):
@@ -181,6 +209,24 @@ def add_product(request):
 		else:
 			return render(request,"BASE/forbidden.html")
 
+def edit_product(request,product_id):
+	if not request.user.is_authenticated():
+		return render(request, 'BASE/login.html')
+	else:
+		if perm(request,request.user,"is_product_admin") == True:				
+			this_entry = Item.objects.get(pk = product_id)
+			form = Item_Form(request.POST or None , instance = this_entry)	
+			if form.is_valid():		
+				form.save()
+				return redirect('../../Add/')
+			else:
+				context = {'form':form}
+				return render(request,'BASE/add_product.html/',context)
+		else:
+			return render(request,"BASE/forbidden.html")
+
+
+
 def add_expense_category(request):
 	if not request.user.is_authenticated():
 		return render(request, 'BASE/login.html')
@@ -198,12 +244,24 @@ def add_expense_category(request):
 		else:
 			return render(request,"BASE/forbidden.html")
 
+def delete_expense_category(request,cat_id):
+	if not request.user.is_authenticated():
+		return render(request, 'BASE/login.html')
+	else:
+		if perm(request,request.user,"is_accounts_admin") == True:
+			this_entry = Expense_Category.objects.get(pk = cat_id)
+			this_entry.delete()
+			return redirect('../../')
+		else:
+			return render(request,"BASE/forbidden.html")
+
 def add_expense(request):
 	if not request.user.is_authenticated():
 		return render(request, 'BASE/login.html')
 	else:
 		if perm(request,request.user,"is_accounts_admin") == True:
-			all_transactions = Expense_Transaction.objects.all()
+			all_entries = Expense_Transaction.objects.all()
+			title = "إضافة مصاريف"
 			form = Expense_Transaction_Form(request.POST or None)
 			if form.is_valid():
 				trans = form.save(commit=False)
@@ -215,10 +273,40 @@ def add_expense(request):
 				treasury_trans.comment = trans.category.name + " " + trans.comment
 				trans.save()
 				treasury_trans.save()
-				context = {"form":form,"all_transactions":all_transactions}
+				context = {"form":form,"all_entries":all_entries,"title":title}
 				return render(request,'BASE/accounts/add_expense.html',context)
-			context = {"form":form,"all_transactions":all_transactions}
+			context = {"form":form,"all_entries":all_entries,"title":title}
 			return render(request,'BASE/accounts/add_expense.html',context)
+		else:
+			return render(request,"BASE/forbidden.html")
+
+def edit_expense(request,expense_id):
+	if not request.user.is_authenticated():
+		return render(request, 'BASE/login.html')
+	else:
+		if perm(request,request.user,"is_accounts_admin") == True:
+			title = "تعديل مصاريف"
+			all_entries = Expense_Transaction.objects.all()
+			this_entry = Expense_Transaction.objects.get(pk = expense_id)	
+			form = Expense_Transaction_Form(request.POST or None,instance = this_entry)
+			if form.is_valid():
+				form.save()
+				return redirect("../../")
+			else:
+				context = {"form":form,"all_entries":all_entries,"title":title}
+				return render(request,"BASE/accounts/add_expense.html",context)
+		else:
+			return render(request,"BASE/forbidden.html")
+
+
+def delete_expense(request,expense_id):
+	if not request.user.is_authenticated():
+		return render(request, 'BASE/login.html')
+	else:
+		if perm(request,request.user,"is_accounts_admin") == True:
+			this_entry = Expense_Transaction.objects.get(pk = expense_id)
+			this_entry.delete()
+			return redirect('../../')
 		else:
 			return render(request,"BASE/forbidden.html")
 
@@ -285,9 +373,9 @@ def login_user(request):
 				login(request, user)
 				return redirect('../')
 			else:
-				return render(request, 'BASE/login.html', {'error_message': 'Your account has been disabled'})
+				return render(request, 'BASE/login.html', {'error_message': 'تم ايقاف الحساب الخاص بكم'})
 		else:
-			return render(request, 'BASE/login.html', {'error_message': 'Invalid login'})
+			return render(request, 'BASE/login.html', {'error_message': 'برجاء ادخال البيانات صحيحة'})
 	return render(request, 'BASE/login.html')
 
 

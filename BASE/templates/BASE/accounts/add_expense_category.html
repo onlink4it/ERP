@@ -36,7 +36,7 @@
 						{% for x in all_categories %}
 							<tr>
 								<td>{{x.name}}</td>
-								<td>
+								<td><a href="{% url 'BASE:delete_expense_category' x.id %}" class="btn btn-danger"><i class="fa fa-remove"></i></a>
 								</td>
 							</tr>
 						{% endfor %}

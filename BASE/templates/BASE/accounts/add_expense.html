@@ -3,7 +3,7 @@
 	<div class="container container-fluid col-md-6 pull-right">
 		<div class="box box-success">
 			<div class="box-header">
-			<h4 class="box-title">إضافة  منتج</h4>
+			<h4 class="box-title">{{title}}</h4>
 			</div>
 			<div class="box-body">
 				{% if error_message %}
@@ -32,15 +32,17 @@
 							<th>المبلغ</th>
 							<th>التفاصيل</th>
 							<th>التاريخ</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
-						{% for x in all_transactions %}
+						{% for x in all_entries %}
 							<tr>
 								<td>{{x.category}}</td>
 								<td>{{x.amount}}</td>
 								<td>{{x.comment}}</td>
 								<td>{{x.date}}</td>
+								<td><a href="{% url 'BASE:edit_expense' x.id %}" class="btn btn-info"><i class="fa fa-edit"></i></a><a href="{% url 'BASE:delete_expense' x.id %}" class="btn btn-danger"><i class="fa fa-remove"></i></a></td>
 							</tr>
 						{% endfor %}
 					</tbody>

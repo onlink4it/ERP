@@ -1,5 +1,16 @@
 {% extends 'BASE/base.html' %}
 {% block body %}
+				<div class="col-md-6 col-xs-12 pull-right">
+			          		<!-- small box -->
+			          		<div class="small-box bg-aqua">
+			            		<div class="inner">
+			              			<h3>{{ balance }}</h3>
+			              			<p>الرصيد</p>
+			           			</div>
+
+			            		<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+			            	</div>
+			          	</div>
 	<div class="container container-fluid col-md-12">
 		<div class="box box-info">
 			<div class="box-header">
@@ -27,59 +38,4 @@
 			</div>
 		</div>
 	</div>
-					<div class="col-md-4 col-xs-12">
-			          		<!-- small box -->
-			          		<div class="small-box bg-aqua">
-			            		<div class="inner">
-			              			<h3>{{ balance }}</h3>
-			              			<p>الرصيد</p>
-			           			</div>
-
-			            		<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-			            	</div>
-			          	</div>
-				<div class="col-md-4 col-xs-12">
-			          		<!-- small box -->
-			          		<div class="small-box bg-green">
-			            		<div class="inner">
-			              			<h3>{{ all_cashier }}</h3>
-			              			<p>اجمالي ايرادات الكاشير</p>
-			           			</div>
-
-			            		<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-			            	</div>
-			          	</div>
-			          	<div class="col-md-4 col-xs-12">
-			          		<!-- small box -->
-			          		<div class="small-box bg-orange">
-			            		<div class="inner">
-			              			<h3>{{ all_delivery }}</h3>
-			              			<p>اجمالي ايرادات الدليفري</p>
-			           			</div>
-
-			            		<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-			            	</div>
-			          	</div>
-			          	<div class="col-md-4 col-xs-12">
-			          		<!-- small box -->
-			          		<div class="small-box bg-red">
-			            		<div class="inner">
-			              			<h3>{{ purchases }}</h3>
-			              			<p>اجمالي المشتريات</p>
-			           			</div>
-
-			            		<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-			            	</div>
-			          	</div>
-			          	<div class="col-md-4 col-xs-12">
-			          		<!-- small box -->
-			          		<div class="small-box bg-red">
-			            		<div class="inner">
-			              			<h3>{{ payments }}</h3>
-			              			<p>اجمالي سداد الموردين</p>
-			           			</div>
-
-			            		<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-			            	</div>
-			          	</div>
 {% endblock %}

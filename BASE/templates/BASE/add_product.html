@@ -30,6 +30,7 @@
 						<tr>
 							<th>المنتج</th>
 							<th>السعر</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -37,6 +38,7 @@
 							<tr>
 								<td>{{x.name}}</td>
 								<td>{{x.price}}</td>
+								<td><a href="{% url 'BASE:edit_product' x.id %}" class="btn btn-info"><i class="fa fa-edit"></i></a></td>
 							</tr>
 						{% endfor %}
 					</tbody>
