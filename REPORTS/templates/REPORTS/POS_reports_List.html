@@ -1,0 +1,38 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+<div class="container container-fluid col-md-12">
+	<div class="box box-info">
+		<div class="box-header">
+			<h4 class="box-title">تقرير الكاشير اليوم </h4>
+		</div>
+		<div class="box-body">
+			<table class="table table-hover" id="example1">
+				<thead class="btn-success">
+					<th>رقم الفاتورة</th>
+					<th>اسم العميل</th>
+					<th>التاريخ</th>
+					<th>إجمالي الفاتورة</th>
+				</thead>
+				<tbody>
+				{% for x in pos_today_inv %}
+					<tr>
+						<td>{{x.0.id}}</td>
+						<td>{{x.0.customer.name}}</td>
+						<td>{{x.0.date}}</td>
+						<td>{{x.1}}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+				<tfoot class="btn-success">
+					<tr>
+						<td>الإجمالي</td>
+						<td></td>
+						<td></td>
+						<td>{{pos_total_report}}</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+</div>	
+{% endblock %}

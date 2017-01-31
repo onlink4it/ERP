@@ -1,0 +1,47 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+				<div class="col-md-3 col-xs-12">
+			          		<!-- small box -->
+			          		<div class="small-box bg-green">
+			            		<div class="inner">
+			              			<h3>{{ pos_total_report }}</h3>
+			              			<p>اجمالي مبيعات الكاشير</p>
+			           			</div>
+
+			            		<a href="#" class="small-box-footer">التفاصيل  <i class="fa fa-arrow-circle-right"></i></a>
+			            	</div>
+			          	</div>
+				<div class="col-md-3 col-xs-12">
+			          		<!-- small box -->
+			          		<div class="small-box bg-red">
+			            		<div class="inner">
+			              			<h3>{{ expenses_total_report }}</h3>
+			              			<p>اجمالي المصاريف</p>
+			           			</div>
+
+			            		<a href="#" class="small-box-footer">التفاصيل  <i class="fa fa-arrow-circle-right"></i></a>
+			            	</div>
+			          	</div>
+				<div class="col-md-3 col-xs-12">
+			          		<!-- small box -->
+			          		<div class="small-box bg-orange">
+			            		<div class="inner">
+			              			<h3>{{ delivery_total_report }}</h3>
+			              			<p>اجمالي مبيعات الدليفري</p>
+			           			</div>
+
+			            		<a href="#" class="small-box-footer">التفاصيل  <i class="fa fa-arrow-circle-right"></i></a>
+			            	</div>
+			          	</div>
+				<div class="col-md-3 col-xs-12">
+			          		<!-- small box -->
+			          		<div class="small-box bg-red">
+			            		<div class="inner">
+			              			<h3>{{ purchases_total_report }}</h3>
+			              			<p>اجمالي المشتريات</p>
+			           			</div>
+
+			            		<a href="#" class="small-box-footer">التفاصيل  <i class="fa fa-arrow-circle-right"></i></a>
+			            	</div>
+			          	</div>
+{% endblock %}

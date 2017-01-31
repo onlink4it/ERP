@@ -72,7 +72,7 @@ def this_day(request):
 		"purchases_today_inv":purchases_today_inv,"purchases_total_report":purchases_total_report,
 		"expenses_today_inv":expenses_today_inv,"expenses_total_report":expenses_total_report,
 		}
-	return render(request,'REPORTS/today.html',context)
+	return render(request,'REPORTS/reports_Index.html',context)
 
 
 def this_month(request):
@@ -128,7 +128,7 @@ def this_month(request):
 		"purchases_today_inv":purchases_today_inv,"purchases_total_report":purchases_total_report,
 		"expenses_today_inv":expenses_today_inv,"expenses_total_report":expenses_total_report,
 		}
-	return render(request,'REPORTS/today.html',context)
+	return render(request,'REPORTS/reports_Index.html',context)
 
 
 def this_year(request):
@@ -184,4 +184,4 @@ def this_year(request):
 		"purchases_today_inv":purchases_today_inv,"purchases_total_report":purchases_total_report,
 		"expenses_today_inv":expenses_today_inv,"expenses_total_report":expenses_total_report,
 		}
-	return render(request,'REPORTS/today.html',context)
+	return render(request,'REPORTS/reports_Index.html',context)
