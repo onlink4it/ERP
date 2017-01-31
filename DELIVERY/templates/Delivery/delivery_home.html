@@ -1,0 +1,120 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+
+{% if customer_address %}
+	<div class="container container-fluid col-md-6">
+		<div class="box box-info">
+			<div class="box-header">
+			<h4 class="box-title">عرض  العناوين المتاحة للعميل </h4>
+			</div>
+			<div class="box-body">
+				<table id="example2" class="table table-hover">
+					<thead>
+						<tr>
+							<th>رقم العميل </th>
+							<th> العنوان</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for x in customer_address %}
+							<tr>
+								<td>{{x.mobile}}</td>
+								<td>{{x.address}}</td>
+								<td>
+
+									<a href="{% url 'DELIVERY:delivery_add_address' x.id %}" class="btn btn-success pull-right">عنوان جديد</a>
+									<a href="{% url 'DELIVERY:delivery_add_invoice' x.id %}" class="btn btn-success"><i class="fa fa-plus"></i></a>
+									<a href="{% url 'DELIVERY:delivery_customer_edit' x.id %}" class="btn btn-info"><i class="fa fa-edit"></i></a>
+									<a href="" class="btn btn-danger"><i class="fa fa-remove"></i></a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endif %}
+	<div class="container container-fluid col-md-6 pull-right">
+		<div class="box box-success">
+			<div class="box-header">
+			<h4 class="box-title">طلب جديد</h4>
+			</div>
+			<div class="box-body">
+				{% if error_message %}
+					<div class="callout callout-danger"><p><strong>{{ error_message }}</strong></p></div>	
+				{% endif %}
+				<form  role="form" action="" method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+					<div class="form-group">
+						{% include 'BASE/form_template.html' %}
+						<input class="btn btn-success pull-left" type="submit" value="إضافة" />
+					</div>	
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="container container-fluid col-md-6">
+		<div class="box box-info">
+			<div class="box-header">
+			<h4 class="box-title">عرض  الطلبات ألمفتوحة</h4>
+			</div>
+			<div class="box-body">
+				<table id="example2" class="table table-hover">
+					<thead>
+						<tr>
+							<th>رقم الطلب</th>
+							<th>اسم العميل</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for x in opened_inv %}
+							<tr>
+								<td>{{x.id}}</td>
+								<td>{{x.customer.mobile}} - {{x.customer.address}}</td>
+								<td>
+									<a href="{% url 'DELIVERY:delivery_categories' x.id %}" class="btn btn-success"><i class="fa fa-list"></i></a>
+									<a href="{% url 'DELIVERY:delivery_delete_invoice' x.id%}" class="btn btn-danger"><i class="fa fa-remove"></i></a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="container container-fluid col-md-6">
+		<div class="box box-info">
+			<div class="box-header">
+			<h4 class="box-title">عرض  جميع الطلبات</h4>
+			</div>
+			<div class="box-body">
+				<table id="example1" class="table table-hover">
+					<thead>
+						<tr>
+							<th>رقم الطلب</th>
+							<th>اسم العميل</th>
+							<th>حالة الطلب</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for x in all_invoices %}
+							<tr>
+								<td>{{x.id}}</td>
+								<td>{{x.customer.mobile}}</td>
+								<td>{% if x.is_closed == True %} <small class="label label-success">Closed</small>{% endif %} {% if x.is_closed == False %} <small class="label label-danger">Opened</small> {% endif %}</td>
+								<td>
+									<a href="{% url 'DELIVERY:delivery_categories' x.id %}" class="btn btn-success"><i class="fa fa-list"></i></a>
+									<a href="{% url 'DELIVERY:delivery_delete_invoice' x.id %}" class="btn btn-danger"><i class="fa fa-remove"></i></a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}

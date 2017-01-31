@@ -1,5 +1,6 @@
 {% extends 'BASE/base.html' %}
 {% block body %}
+{% if pos_employee == True %}
 	<div class="container container-fluid col-md-6 pull-right">
 		<div class="box box-success">
 			<div class="box-header">
@@ -19,6 +20,8 @@
 			</div>
 		</div>
 	</div>
+{% endif %}
+{% if pos_employee == True or pos_admin == True %}
 	<div class="container container-fluid col-md-6">
 		<div class="box box-info">
 			<div class="box-header">
@@ -40,8 +43,7 @@
 								<td>{{x.customer.name}}</td>
 								<td>
 									<a href="{% url 'POS:POS_categories' x.id %}" class="btn btn-success"><i class="fa fa-list"></i></a>
-									<a href="" class="btn btn-info"><i class="fa fa-edit"></i></a>
-									<a href="" class="btn btn-danger"><i class="fa fa-remove"></i></a>
+									{% if pos_admin == True %}<a href="{% url 'POS:POS_delete_invoice' x.id %}" class="btn btn-danger"><i class="fa fa-remove"></i></a>{% endif %}
 								</td>
 							</tr>
 						{% endfor %}
@@ -50,5 +52,113 @@
 			</div>
 		</div>
 	</div>
+	<div class="container container-fluid col-md-12">
+		<div class="box box-info">
+			<div class="box-header">
+			<h4 class="box-title">عرض  جميع العملاء</h4>
+			</div>
+			<div class="box-body">
+				<table id="example1" class="table table-hover">
+					<thead>
+						<tr>
+							<th>رقم الطلب</th>
+							<th>اسم العميل</th>
+							<th>حالة الطلب</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for x in all_customers %}
+							<tr>
+								<td>{{x.name}}</td>
+								<td>{{x.credit}}</td>
+								<td>{% if x.is_closed == True %} <small class="label label-success">Closed</small>{% endif %} {% if x.is_closed == False %} <small class="label label-danger">Opened</small> {% endif %}</td>
+								<td>
+									<a href="{% url 'POS:POS_customer_payment' x.id %}" class="btn btn-success"><i class="fa fa-money"></i></a>
+									{% if pos_admin == True %}<a href="{% url 'POS:POS_delete_customer' x.id %}" class="btn btn-danger"><i class="fa fa-remove"></i></a>{% endif %}
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>	
+{% endif %}
+{% if pos_admin == True %}
 
+	<div class="container container-fluid col-md-12">
+		<div class="box box-info">
+			<div class="box-header">
+			<h4 class="box-title">عرض  جميع موظفين الكاشير</h4>
+			</div>
+			<div class="box-body">
+				<table id="example1" class="table table-hover">
+					<thead>
+						<tr>
+							<th>يوزر نيم الموظف</th>
+							<th>اسم الموظف</th>
+							<th>رصيد الموظف</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for x in pos_employees %}
+							<tr>
+								<td>{{x.user.username}}</td>
+								<td>{{x.user.first_name}} {{x.user.last_name}}</td>
+								<td>{{x.credit}}</td>
+								<td>
+									<a href="{% url 'POS:POS_employee_payment' x.id %}" class="btn btn-success"><i class="fa fa-money"></i></a>
+								</td>
+							</tr>
+						{% endfor %}
+						{% for x in pos_admins %}
+							<tr>
+								<td>{{x.user.username}}</td>
+								<td>{{x.user.first_name}} {{x.user.last_name}}</td>
+								<td>{{x.credit}}</td>
+								<td>
+									<a href="{% url 'POS:POS_employee_payment' x.id %}" class="btn btn-success"><i class="fa fa-money"></i></a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>	
+	<div class="container container-fluid col-md-12">
+		<div class="box box-info">
+			<div class="box-header">
+			<h4 class="box-title">عرض  جميع الطلبات</h4>
+			</div>
+			<div class="box-body">
+				<table id="example1" class="table table-hover">
+					<thead>
+						<tr>
+							<th>رقم الطلب</th>
+							<th>اسم العميل</th>
+							<th>حالة الطلب</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for x in all_invoices %}
+							<tr>
+								<td>{{x.id}}</td>
+								<td>{{x.customer.name}}</td>
+								<td>{% if x.is_closed == True %} <small class="label label-success">Closed</small>{% endif %} {% if x.is_closed == False %} <small class="label label-danger">Opened</small> {% endif %}</td>
+								<td>
+									<a href="{% url 'POS:POS_categories' x.id %}" class="btn btn-success"><i class="fa fa-list"></i></a>
+									<a href="{% url 'POS:POS_delete_invoice' x.id %}" class="btn btn-danger"><i class="fa fa-remove"></i></a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>	
+{% endif %}
 {% endblock %}

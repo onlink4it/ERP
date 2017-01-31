@@ -1,0 +1,107 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+	<div class="container container-fluid col-md-6 pull-right">
+		<div class="box box-success">
+			<div class="box-header">
+			<h4 class="box-title">طلب جديد</h4>
+			</div>
+			<div class="box-body">
+				{% if error_message %}
+					<div class="callout callout-danger"><p><strong>{{ error_message }}</strong></p></div>	
+				{% endif %}
+				<form  role="form" action="" method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+						
+					<div class="mainmenu">
+						{% for x in all_cat %}
+							<a href="{% url 'DELIVERY:delivery_items' inv_id x.id %}"><div class="menuitem"><div class="text" >{{x.name}}</div></div></a>
+						{% endfor %}
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="container container-fluid col-md-6">
+		<div class="box box-info">
+			<div class="box-header">
+			<h4 class="box-title">عرض محتويات  الطلب</h4>
+			</div>
+			<div class="box-body">
+				<table id="example1" class="table table-hover">
+					<thead>
+						<tr>
+							<th>المنتج</th>
+							<th>الكمية</th>
+							<th>سعر الوحدة</th>
+							<th>إجمالي </th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for x in inv_items %}
+							<tr>
+								<td>{{x.item.name}}</td>
+								<td>
+									{{x.quantity}}
+									{% if this_inv.is_closed == False %}
+									<a href="{% url 'DELIVERY:delivery_increase_quantity' x.invoice_id.id x.id %}" class="btn btn-success">
+										<i class="fa fa-plus"></i>
+									</a>
+									<a href="{% url 'DELIVERY:delivery_decrease_quantity' x.invoice_id.id x.id %}" class="btn btn-danger">
+										<i class="fa fa-minus"></i>
+									</a>
+									{% endif %}
+								</td>
+								<td>{{x.unit_price}}</td>
+								<td>{{x.total_price}}</td>
+								<td>{% if x.is_closed == True %}<i class="fa fa-check"></i>{% endif %}</td>
+								<td>
+								{% if this_inv.is_closed == False %}
+									<a href="{% url 'DELIVERY:delivery_delete_invoice_item'  x.invoice_id.id x.id%}" class="btn btn-danger"><i class="fa fa-remove"></i></a>
+								{% endif %}
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% if this_inv.is_closed == False %}
+				<a href="{% url 'DELIVERY:delivery_close_invoice' inv_id %}" class="btn btn-success col-md-12">حفظ الطلب</a>
+				{% endif %}
+				{% if this_inv.is_closed == True %}
+				<a href="{% url 'DELIVERY:delivery_print_invoice' inv_id %}" target="_blank" class="btn btn-warning col-md-12">طباعة</a>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	<div class="container container-fluid col-md-6">
+		<div class="box box-info">
+			<div class="box-header">
+			<h4 class="box-title">عرض  الطلبات ألمفتوحة</h4>
+			</div>
+			<div class="box-body">
+				<table id="example2" class="table table-hover">
+					<thead>
+						<tr>
+							<th>رقم الطلب</th>
+							<th>اسم العميل</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for x in unpaid_invoices %}
+							<tr>
+								<td>{{x.id}}</td>
+								<td>{{x.customer.name}}</td>
+								<td>
+									<a href="" class="btn btn-success"><i class="fa fa-add"></i></a>
+									<a href="" class="btn btn-info"><i class="fa fa-edit"></i></a>
+									<a href="" class="btn btn-danger"><i class="fa fa-remove"></i></a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}

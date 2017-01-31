@@ -1,0 +1,22 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+	<div class="container container-fluid col-md-6 pull-right">
+		<div class="box box-success">
+			<div class="box-header">
+			<h4 class="box-title">سداد دفعة من حساب عميل</h4>
+			</div>
+			<div class="box-body">
+				{% if error_message %}
+					<div class="callout callout-danger"><p><strong>{{ error_message }}</strong></p></div>	
+				{% endif %}
+				<form  role="form" action="" method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+					<div class="form-group">
+						{% include 'BASE/form_template.html' %}
+						<input class="btn btn-success pull-left" type="submit" value="سداد" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

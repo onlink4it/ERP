@@ -1,0 +1,11 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+<div class="box">
+	<div class="box-head-danger col-md-9 pull-right">
+		<h4>اوبا !!! </h4>
+	</div>
+	<div class="box-body">
+		<h1>{% for x in text %}{{x}}{% endfor %}</h1>
+	</div>
+</div>
+{% endblock %}

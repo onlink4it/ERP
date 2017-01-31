@@ -1,0 +1,57 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+	<div class="container container-fluid col-md-6 pull-right">
+		<div class="box box-success">
+			<div class="box-header">
+			<h4 class="box-title">طلب جديد</h4>
+			</div>
+			<div class="box-body">
+				{% if error_message %}
+					<div class="callout callout-danger"><p><strong>{{ error_message }}</strong></p></div>	
+				{% endif %}
+				<form  role="form" action="" method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+					<div class="form-group">
+						{% include 'BASE/form_template.html' %}
+						<input class="btn btn-success pull-left" type="submit" value="إضافة" />
+					</div>	
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="container container-fluid col-md-6">
+		<div class="box box-info">
+			<div class="box-header">
+			<h4 class="box-title">عرض  فواتير الشراء</h4>
+			</div>
+			<div class="box-body">
+				<table id="example2" class="table table-hover">
+					<thead>
+						<tr>
+							<th>رقم الطلب</th>
+							<th>اسم المورد</th>
+							<th>اجمالي الفاتورة</th>
+							<th>التاريخ</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for x in all_invoices %}
+							<tr>
+								<td>{{x.id}}</td>
+								<td>{{x.supplier.name}}</td>
+								<td>{{x.total_price}}</td>
+								<td>{{x.date}}</td>
+								<td>
+									<a href="{% url 'PURCHASES:purchase_add_item' x.id %}" class="btn btn-info"><i class="fa fa-list"></i></a>
+									{% if x.delivered == False %}<a href="{% url 'PURCHASES:purchase_invoice_delivered' x.id %}" class="btn btn-warning"><i class="fa fa-handshake-o"></i></a>{% endif %}
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

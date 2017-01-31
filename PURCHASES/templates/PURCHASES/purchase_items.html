@@ -1,0 +1,65 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+{% if this_inv.delivered == False %}
+	<div class="container container-fluid col-md-6 pull-right">
+		<div class="box box-success">
+			<div class="box-header">
+			<h4 class="box-title">طلب جديد</h4>
+			</div>
+			<div class="box-body">
+				{% if error_message %}
+					<div class="callout callout-danger"><p><strong>{{ error_message }}</strong></p></div>	
+				{% endif %}
+				<form  role="form" action="" method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+				{% include 'BASE/form_template.html' %}
+				<button class="btn btn-success">إضافة</button>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endif %}
+	<div class="container container-fluid col-md-6">
+		<div class="box box-info">
+			<div class="box-header">
+			<h4 class="box-title">عرض محتويات  الطلب</h4>
+			</div>
+			<div class="box-body">
+				<table id="example1" class="table table-hover">
+					<thead>
+						<tr>
+							<th>المنتج</th>
+							<th>الكمية</th>
+							<th>سعر الوحدة</th>
+							<th>إجمالي </th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for x in inv_items %}
+							<tr>
+								<td>{{x.item.name}}</td>
+								<td>
+									{{x.quantity}}
+
+								</td>
+								<td>{{x.unit_price}}</td>
+								<td>{{x.total_price}}</td>
+								<td>
+									{% if this_inv.delivered == False %}<a href="{% url 'PURCHASES:purchase_item_delete'  x.invoice_id.id x.id%}" class="btn btn-danger"><i class="fa fa-remove"></i></a>{% endif %}
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% if this_inv.delivered == False %}
+				<a href="{% url 'PURCHASES:purchase_invoice_delivered' this_inv.id %}" class="btn btn-success col-md-12">استلام</a>
+				{% endif %}
+				{% if this_inv.delivered == True %}
+				<a href="{% url 'PURCHASES:purchase_print_invoice' this_inv.id %}" target="_blank" class="btn btn-warning col-md-12">طباعة</a>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

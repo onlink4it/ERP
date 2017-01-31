@@ -1,0 +1,49 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+	<div class="container container-fluid col-md-6 pull-right">
+		<div class="box box-success">
+			<div class="box-header">
+			<h4 class="box-title">سداد حساب مورد</h4>
+			</div>
+			<div class="box-body">
+				{% if error_message %}
+					<div class="callout callout-danger"><p><strong>{{ error_message }}</strong></p></div>	
+				{% endif %}
+				<form  role="form" action="" method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+					<div class="form-group">
+						{% include 'BASE/form_template.html' %}
+						<input class="btn btn-success pull-left" type="submit" value="سداد" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="container container-fluid col-md-6">
+		<div class="box box-info">
+			<div class="box-header">
+			<h4 class="box-title">عرض جميع عمليات المورد</h4>
+			</div>
+			<div class="box-body">
+				<table id="example1" class="table table-hover">
+					<thead>
+						<tr>
+							<th>التاريخ</th>
+							<th>العملية</th>
+							<th>المبلغ</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for x in all_suppliers_trans %}
+							<tr>
+								<td>{{x.date}}</td>
+								<td>{{x.comment}}</td>
+								<td>{{x.amount}}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -19,7 +19,7 @@ class POS_Invoice(models.Model):
 		return str(self.id) + " - " + str(self.date) + " - " + str(self.customer.name)
 
 	def get_items(self):
-		invoice_items.objects.filter(invoice_id = self.id)
+		return POS_Invoice_Items.objects.filter(invoice_id = self.id)
 
 class POS_Invoice_Items(models.Model):
 	invoice = models.ForeignKey(POS_Invoice, on_delete = models.CASCADE)

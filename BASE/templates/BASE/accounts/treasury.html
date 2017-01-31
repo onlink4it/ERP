@@ -1,0 +1,85 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+	<div class="container container-fluid col-md-12">
+		<div class="box box-info">
+			<div class="box-header">
+			<h4 class="box-title">عرض حركات الخزنة</h4>
+			</div>
+			<div class="box-body">
+				<table id="example1" class="table table-hover">
+					<thead>
+						<tr>
+							<th>المبلغ</th>
+							<th>التفاصيل</th>
+							<th>التاريخ</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for x in treasury_trans %}
+							<tr>
+								<td>{{x.amount}}</td>
+								<td>{{x.comment}}</td>
+								<td>{{x.date}}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+					<div class="col-md-4 col-xs-12">
+			          		<!-- small box -->
+			          		<div class="small-box bg-aqua">
+			            		<div class="inner">
+			              			<h3>{{ balance }}</h3>
+			              			<p>الرصيد</p>
+			           			</div>
+
+			            		<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+			            	</div>
+			          	</div>
+				<div class="col-md-4 col-xs-12">
+			          		<!-- small box -->
+			          		<div class="small-box bg-green">
+			            		<div class="inner">
+			              			<h3>{{ all_cashier }}</h3>
+			              			<p>اجمالي ايرادات الكاشير</p>
+			           			</div>
+
+			            		<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+			            	</div>
+			          	</div>
+			          	<div class="col-md-4 col-xs-12">
+			          		<!-- small box -->
+			          		<div class="small-box bg-orange">
+			            		<div class="inner">
+			              			<h3>{{ all_delivery }}</h3>
+			              			<p>اجمالي ايرادات الدليفري</p>
+			           			</div>
+
+			            		<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+			            	</div>
+			          	</div>
+			          	<div class="col-md-4 col-xs-12">
+			          		<!-- small box -->
+			          		<div class="small-box bg-red">
+			            		<div class="inner">
+			              			<h3>{{ purchases }}</h3>
+			              			<p>اجمالي المشتريات</p>
+			           			</div>
+
+			            		<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+			            	</div>
+			          	</div>
+			          	<div class="col-md-4 col-xs-12">
+			          		<!-- small box -->
+			          		<div class="small-box bg-red">
+			            		<div class="inner">
+			              			<h3>{{ payments }}</h3>
+			              			<p>اجمالي سداد الموردين</p>
+			           			</div>
+
+			            		<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+			            	</div>
+			          	</div>
+{% endblock %}

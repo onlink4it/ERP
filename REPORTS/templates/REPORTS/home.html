@@ -1,0 +1,36 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+<div class="mainmenu">
+	<a href="{% url 'REPORTS:this_day' %}">
+		<div class="menuitem" style="background-color:maroon;">
+			<div class="icon">
+				<i class="fa fa-calendar"></i>
+			</div>
+			<div class="text">
+				تقرير اليوم
+			</div>
+		</div>
+	</a>	
+	<a href="{% url 'REPORTS:this_month' %}">
+		<div class="menuitem" style="background-color:maroon;">
+			<div class="icon">
+				<i class="fa fa-calendar"></i>
+			</div>
+			<div class="text">
+				تقرير هذا الشهر 
+			</div>
+		</div>
+	</a>	
+	<a href="{% url 'REPORTS:this_year' %}">
+		<div class="menuitem" style="background-color:maroon;">
+			<div class="icon">
+				<i class="fa fa-calendar"></i>
+			</div>
+			<div class="text">
+				تقرير هذه السنة 
+			</div>
+		</div>
+	</a>	
+
+</div>
+{% endblock %}

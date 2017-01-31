@@ -1,0 +1,51 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+	<div class="container container-fluid col-md-6 pull-right">
+		<div class="box box-success">
+			<div class="box-header">
+			<h4 class="box-title">إضافة  موظف</h4>
+			</div>
+			<div class="box-body">
+				{% if error_message %}
+					<div class="callout callout-danger"><p><strong>{{ error_message }}</strong></p></div>	
+				{% endif %}
+				<form  role="form" action="" method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+					<div class="form-group">
+						{% include 'BASE/form_template.html' %}
+						<input class="btn btn-success pull-left" type="submit" value="إضافة" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="container container-fluid col-md-6">
+		<div class="box box-info">
+			<div class="box-header">
+			<h4 class="box-title">عرض جميع الموظفين</h4>
+			</div>
+			<div class="box-body">
+				<table id="example2" class="table table-hover">
+					<thead>
+						<tr>
+							<th>اليوزرنيم</th>
+							<th>اسم الموظف</th>
+							<th>حالة الموظف</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for x in all_emp %}
+							<tr>
+								<td>{{x.username}}</td>
+								<td>{{x.first_name}} {{x.last_name}}</td>
+								<td>{% if x.is_active == True %}<small class="label label-success">مفعل</small>{% endif %} {% if x.is_active == False %}<small class="label label-danger">غير مفعل</small>{% endif %}</td>
+								<td><a href="{% url 'BASE:user_perm' x.id %}" class="btn btn-success"><i class="fa fa-edit"></i></a></td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}

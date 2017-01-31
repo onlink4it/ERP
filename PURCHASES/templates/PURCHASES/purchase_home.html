@@ -1,0 +1,25 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+<div class="mainmenu">
+	<a href="{% url 'PURCHASES:purchase_supplier' %}">
+		<div class="menuitem" style="background-color:black;">
+			<div class="icon">
+				<i class="fa fa-vcard"></i>
+			</div>
+			<div class="text">
+				إدارة الموردين
+			</div>
+		</div>
+	</a>	
+	<a href="{% url 'PURCHASES:purchase_add_invoice' %}">
+		<div class="menuitem" style="background-color:black;">
+			<div class="icon">
+				<i class="fa fa-file-text"></i>
+			</div>
+			<div class="text">
+				إضافة فاتورة مشتريات 
+			</div>
+		</div>
+	</a>	
+</div>
+{% endblock %}

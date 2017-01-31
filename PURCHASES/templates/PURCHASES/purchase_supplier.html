@@ -1,0 +1,55 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+	<div class="container container-fluid col-md-6 pull-right">
+		<div class="box box-success">
+			<div class="box-header">
+			<h4 class="box-title">إضافة مورد جديد</h4>
+			</div>
+			<div class="box-body">
+				{% if error_message %}
+					<div class="callout callout-danger"><p><strong>{{ error_message }}</strong></p></div>	
+				{% endif %}
+				<form  role="form" action="" method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+					<div class="form-group">
+						{% include 'BASE/form_template.html' %}
+						<input class="btn btn-success pull-left" type="submit" value="إضافة" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="container container-fluid col-md-6">
+		<div class="box box-info">
+			<div class="box-header">
+			<h4 class="box-title">عرض جمع الموردين</h4>
+			</div>
+			<div class="box-body">
+				<table id="example1" class="table table-hover">
+					<thead>
+						<tr>
+							<th>المورد</th>
+							<th>الموبايل</th>
+							<th>العنوان</th>
+							<th>مديونية</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for x in all_suppliers %}
+							<tr>
+								<td>{{x.name}}</td>
+								<td>{{x.mobile}}</td>
+								<td>{{x.address}}</td>
+								<td>{{x.credit}}</td>
+								<td>
+									<a href="{% url 'PURCHASES:purchase_supplier_payment' x.id %}" class="btn btn-success"><i class="fa fa-money"></i></a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}

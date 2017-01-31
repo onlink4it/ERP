@@ -1,0 +1,35 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+<div class="mainmenu">
+
+	<a href="{% url 'BASE:add_expense_category' %}">
+		<div class="menuitem" style="background-color:green;">
+			<div class="icon">
+				<i class="fa fa-th"></i>
+			</div>
+			<div class="text">
+				إدارة تصنيفات المصاريف
+			</div>
+		</div>
+	</a>
+	<a href="{% url 'BASE:add_expense' %}">
+		<div class="menuitem" style="background-color:green;">
+			<div class="icon">
+				<i class="fa fa-motorcycle"></i>
+			</div>
+			<div class="text">
+				إدارة المصاريف
+			</div>
+		</div>
+	</a>		
+	<a href="{% url 'BASE:treasury' %}">
+		<div class="menuitem" style="background-color:green;">
+			<div class="icon">
+				<i class="fa fa-handshake-o"></i>
+			</div>
+			<div class="text">
+				إدارة الخزنة
+			</div>
+		</div>
+	</a>	
+{% endblock %}

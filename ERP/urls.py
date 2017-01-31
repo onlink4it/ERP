@@ -10,4 +10,8 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^ERP/', include('BASE.urls')),
     url(r'^POS/',include('POS.urls')),
+    url(r'^Delivery/',include('DELIVERY.urls')),
+    url(r'^Purchases/', include('PURCHASES.urls')),
+    url(r'^Stock/',include('STOCK.urls')),
+    url(r'^Reports/',include('REPORTS.urls')),
 ]

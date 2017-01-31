@@ -1,6 +1,7 @@
 {% extends 'BASE/base.html' %}
 {% block body %}
 <div class="mainmenu">
+{% if authorized_array.1 == True %}
 	<a href="#">
 		<div class="menuitem" style="background-color:red;">
 			<div class="icon">
@@ -11,6 +12,8 @@
 			</div>
 		</div>
 	</a>	
+{% endif %}
+{% if authorized_array.0 == True %}
 	<a href="{% url 'BASE:add_category' %}">
 		<div class="menuitem" style="background-color:red;">
 			<div class="icon">
@@ -31,5 +34,18 @@
 			</div>
 		</div>
 	</a>
+{% endif %}
+{% if authorized_array.2 == True %}
+	<a href="{% url 'BASE:user_accounts' %}">
+		<div class="menuitem" style="background-color:red;">
+			<div class="icon">
+				<i class="fa fa-user-circle"></i>
+			</div>
+			<div class="text">
+				إدارة  الموظفين 
+			</div>
+		</div>
+	</a>
 </div>
+{% endif %}
 {% endblock %}

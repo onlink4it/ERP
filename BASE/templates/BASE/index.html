@@ -1,7 +1,7 @@
 {% extends 'BASE/base.html' %}
 {% block body %}
 <div class="mainmenu">
-
+{% if authorized_array.0 == True  or authorized_array.1 == True %}
 	<a href="{% url 'POS:POS' %}">
 		<div class="menuitem" style="background-color:darkblue;">
 			<div class="icon">
@@ -12,7 +12,9 @@
 			</div>
 		</div>
 	</a>
-	<a href="#">
+{% endif %}
+{% if authorized_array.2 == True or authorized_array.3 %}
+	<a href="{% url 'DELIVERY:delivery' %}">
 		<div class="menuitem" style="background-color:orange;">
 			<div class="icon">
 				<i class="fa fa-motorcycle"></i>
@@ -22,6 +24,8 @@
 			</div>
 		</div>
 	</a>		
+{% endif %}
+{% if hr_authorized == True %}
 	<a href="#">
 		<div class="menuitem">
 			<div class="icon">
@@ -32,7 +36,9 @@
 			</div>
 		</div>
 	</a>	
-	<a href="#">
+{% endif %}
+{% if authorized_array.9 == True %}
+	<a href="{% url 'BASE:accounts_home' %}">
 		<div class="menuitem" style="background-color:green;">
 			<div class="icon">
 				<i class="fa fa-book"></i>
@@ -42,6 +48,8 @@
 			</div>
 		</div>
 	</a>		
+{% endif %}
+{% if authorized_array.4 == True or authorized_array.5 == True or authorized_array.8 == True %}
 	<a href="{% url 'BASE:system_setting' %}">
 		<div class="menuitem" style="background-color:red;">
 			<div class="icon">
@@ -52,8 +60,10 @@
 			</div>
 		</div>
 	</a>	
-	<a href="#">
-		<div class="menuitem" style="background-color:magenta">
+{% endif %}
+{% if authorized_array.7 == True %}
+	<a href="{% url 'STOCK:stock' %}">
+		<div class="menuitem" style="background-color:purple">
 			<div class="icon">
 				<i class="fa fa-barcode"></i>
 			</div>
@@ -62,7 +72,9 @@
 			</div>
 		</div>
 	</a>
-	<a href="#">
+{% endif %}
+{% if authorized_array.6 == True %}
+	<a href="{% url 'PURCHASES:purchase' %}">
 		<div class="menuitem" style="background-color:black">
 			<div class="icon">
 				<i class="fa fa-shopping-cart"></i>
@@ -72,5 +84,20 @@
 			</div>
 		</div>
 	</a>
+{% endif %}
+{% if authorized_array.6 == True %}
+	<a href="{% url 'REPORTS:reports' %}">
+		<div class="menuitem" style="background-color:maroon">
+			<div class="icon">
+				<i class="fa  fa-list-alt"></i>
+			</div>
+			<div class="text">
+				التقارير
+			</div>
+		</div>
+	</a>
+
+{% endif %}
 </div>
+
 {% endblock %}
