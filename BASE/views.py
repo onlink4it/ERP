@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.contrib.auth import authenticate, login, logout
 from django.template import loader
 from datetime import date,datetime
@@ -60,6 +62,12 @@ def perm(request,x,permission):
 			return True
 		else:
 			return False
+	if permission == "is_superuser":
+		if employee.is_superuser == True:
+			return True
+		else:
+			return False
+
 
 
 # Create your views here.
@@ -128,41 +136,7 @@ def user_perm(request,user_id):
 					emp_exist.is_user_admin =new_emp.is_user_admin
 					emp_exist.is_accounts_admin =new_emp.is_accounts_admin
 					emp_exist.save()
-					error_message = "تم تعديل صلاحيات الموظف"
-					context = {"form":form,"error_message":error_message,"all_emp":all_emp}
-					return render(request,"BASE/user_perm.html",context)
-				except User_Admin.DoesNotExist:
-					new_emp.user = emp_user
-					new_emp.save()
-			context = {"form":form,"all_emp":all_emp}
-			return render(request,"BASE/user_perm.html",context)
-		else:
-			return render(request,"BASE/forbidden.html")
-
-def edit_user_perm(request,user_id):
-	if not request.user.is_authenticated():
-		return render(request, 'BASE/login.html')
-	else:
-		if perm(request,request.user,"is_user_admin") == True:
-			all_emp = User_Admin.objects.all()
-			emp_user = User.objects.get(pk = user_id)
-			form = User_Admin_Form(request.POST or None)
-			if form.is_valid():
-				new_emp = form.save(commit = False)
-				try:
-					emp_exist = User_Admin.objects.get(user = emp_user)
-					emp_exist.is_pos_employee =new_emp.is_pos_employee
-					emp_exist.is_pos_admin =new_emp.is_pos_admin
-					emp_exist.is_delivery_taker =new_emp.is_delivery_taker
-					emp_exist.is_delivery_admin =new_emp.is_delivery_admin
-					emp_exist.is_product_admin =new_emp.is_product_admin
-					emp_exist.is_invoice_admin =new_emp.is_invoice_admin
-					emp_exist.is_purchases_admin =new_emp.is_purchases_admin
-					emp_exist.is_stock_admin =new_emp.is_stock_admin
-					emp_exist.is_user_admin =new_emp.is_user_admin
-					emp_exist.is_accounts_admin =new_emp.is_accounts_admin
-					emp_exist.save()
-					error_message = "تم تعديل صلاحيات الموظف"
+					error_message = ""
 					context = {"form":form,"error_message":error_message,"all_emp":all_emp}
 					return render(request,"BASE/user_perm.html",context)
 				except User_Admin.DoesNotExist:
@@ -179,6 +153,23 @@ def add_category(request):
 		return render(request, 'BASE/login.html')
 	else:
 		if perm(request,request.user,"is_product_admin") == True:
+			all_entries = Item_Category.objects.all()
+			form = Item_Category_Form(request.POST or None)
+			if form.is_valid():
+				cat = form.save(commit=False)
+				cat.save()
+				context = {"form":form,"all_entries":all_entries}
+				return render(request,'BASE/add_category.html',context)
+			context = {"form":form,"all_entries":all_entries}
+			return render(request,'BASE/add_category.html',context)
+		else:
+			return render(request,"BASE/forbidden.html")
+
+def edit_category(request):
+	if not request.user.is_authenticated():
+		return render(request, 'BASE/login.html')
+	else:
+		if perm(request,request.user,"is_product_admin") == True:
 			all_categories = Item_Category.objects.all()
 			form = Item_Category_Form(request.POST or None)
 			if form.is_valid():
@@ -191,6 +182,22 @@ def add_category(request):
 		else:
 			return render(request,"BASE/forbidden.html")
 
+def add_category(request):
+	if not request.user.is_authenticated():
+		return render(request, 'BASE/login.html')
+	else:
+		if perm(request,request.user,"is_product_admin") == True:
+			all_categories = Item_Category.objects.all()
+			form = Item_Category_Form(request.POST or None)
+			if form.is_valid():
+				cat = form.save(commit=False)
+				cat.save()
+				context = {"form":form,"all_categories":all_categories}
+				return render(request,'BASE/add_category.html',context)
+			context = {"form":form,"all_categories":all_categories}
+			return render(request,'BASE/add_category.html',context)
+		else:
+			return render(request,"BASE/forbidden.html")
 
 def add_product(request):
 	if not request.user.is_authenticated():
@@ -261,7 +268,7 @@ def add_expense(request):
 	else:
 		if perm(request,request.user,"is_accounts_admin") == True:
 			all_entries = Expense_Transaction.objects.all()
-			title = "إضافة مصاريف"
+			title = ""
 			form = Expense_Transaction_Form(request.POST or None)
 			if form.is_valid():
 				trans = form.save(commit=False)
@@ -285,7 +292,7 @@ def edit_expense(request,expense_id):
 		return render(request, 'BASE/login.html')
 	else:
 		if perm(request,request.user,"is_accounts_admin") == True:
-			title = "تعديل مصاريف"
+			title = ""
 			all_entries = Expense_Transaction.objects.all()
 			this_entry = Expense_Transaction.objects.get(pk = expense_id)	
 			form = Expense_Transaction_Form(request.POST or None,instance = this_entry)
@@ -373,9 +380,9 @@ def login_user(request):
 				login(request, user)
 				return redirect('../')
 			else:
-				return render(request, 'BASE/login.html', {'error_message': 'تم ايقاف الحساب الخاص بكم'})
+				return render(request, 'BASE/login.html', {'error_message': ''})
 		else:
-			return render(request, 'BASE/login.html', {'error_message': 'برجاء ادخال البيانات صحيحة'})
+			return render(request, 'BASE/login.html', {'error_message': ''})
 	return render(request, 'BASE/login.html')
 
 
