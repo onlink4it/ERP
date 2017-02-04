@@ -153,14 +153,14 @@ def add_category(request):
 		return render(request, 'BASE/login.html')
 	else:
 		if perm(request,request.user,"is_product_admin") == True:
-			all_entries = Item_Category.objects.all()
+			all_categories = Item_Category.objects.all()
 			form = Item_Category_Form(request.POST or None)
 			if form.is_valid():
 				cat = form.save(commit=False)
 				cat.save()
-				context = {"form":form,"all_entries":all_entries}
+				context = {"form":form,"all_categories":all_categories}
 				return render(request,'BASE/add_category.html',context)
-			context = {"form":form,"all_entries":all_entries}
+			context = {"form":form,"all_categories":all_categories}
 			return render(request,'BASE/add_category.html',context)
 		else:
 			return render(request,"BASE/forbidden.html")

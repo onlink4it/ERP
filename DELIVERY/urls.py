@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^Invoice/(?P<inv_id>[0-9]+)/Delete/Invoice/$',views.Delivery_delete_invoice,name="delivery_delete_invoice"),
     url(r'^Invoice/(?P<inv_id>[0-9]+)/Close/$',views.Delivery_close_invoice, name="delivery_close_invoice"),
     url(r'^Invoice/(?P<inv_id>[0-9]+)/Print/$',views.Delivery_print_invoice, name="delivery_print_invoice"),   
+    url(r'^Invoice/(?P<inv_id>[0-9]+)/Ship/$',views.Delivery_shipping, name="delivery_shipping"),   
    ]

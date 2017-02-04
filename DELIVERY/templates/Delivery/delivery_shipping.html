@@ -1,0 +1,27 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+	<div class="container container-fluid col-md-6 pull-right">
+		<div class="box box-success">
+			<div class="box-header">
+			<h4 class="box-title">شحن الطلب</h4>
+			</div>
+			<div class="box-body">
+				{% if error_message %}
+					<div class="callout callout-danger"><p><strong>{{ error_message }}</strong></p></div>	
+				{% endif %}
+				<form  role="form" action="" method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+					<div class="form-group">
+						<label class="form-label">الطيار</label>
+						<select name="shipped_with" class="form-control">
+							{% for x in delivery_pilots %}
+								<option value='{{x.id}}'>{% if x.user.first_name %} {{x.user.first_name}} {{x.user.last_name}} {% else %} {{x.user.username}} {% endif %}</option>
+							{% endfor %}
+						</select>
+						<input class="btn btn-success pull-left" type="submit" value="إضافة" />
+					</div>	
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -8,13 +8,13 @@ class Item_Category_Form(forms.ModelForm):
     class Meta:
         model = Item_Category
         fields = ['name']
-        labels = { 'name': _('اسم المنتج')}
+        labels = { 'name': _('اسم التصنيف')}
 
 class Item_Form(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ['category','name','price']
-        labels = { 'category': _('التصنيف'),'name': _('اسم المنتج'),'price': _('السعر')}
+        fields = ['category','name','price','stock_managed','add_to_website',]
+        labels = { 'category': _('التصنيف'),'name': _('اسم المنتج'),'price': _('السعر'),'stock_managed':_('إدارة المخزون لهذا المنتج'),'add_to_website':_('إضافة إلي الموقع')}
 
 class Expense_Category_Form(forms.ModelForm):
     class Meta:
@@ -41,7 +41,8 @@ class User_Admin_Form(forms.ModelForm):
     class Meta:
         model = User_Admin
         fields = ['is_pos_employee' ,'is_pos_admin','is_delivery_taker','is_delivery_admin','is_product_admin','is_invoice_admin','is_purchases_admin',
-        'is_stock_admin','is_user_admin','is_accounts_admin']
+        'is_stock_admin','is_user_admin','is_accounts_admin','is_delivery_pilot']
         labels = { 'is_pos_employee': _('موظف كاشير'),'is_pos_admin': _('مدير كاشير'),'is_delivery_taker': _('دليفري تيكر'),
                 'is_product_admin':_('مدير منتجات'),'is_invoice_admin':_('مدير الفواتير'),'is_purchases_admin':_('مدير مشتريات'),
-                'is_stock_admin':_('مدير مخزون'),'is_user_admin':_('مدير حسابات الموظفين '),'is_accounts_admin':_("مدير حسابات")}
+                'is_stock_admin':_('مدير مخزون'),'is_user_admin':_('مدير حسابات الموظفين '),'is_accounts_admin':_("مدير حسابات"),
+                'is_delivery_pilot':_('طيار دليفري'),'is_delivery_admin':_('مدير دليفري')}

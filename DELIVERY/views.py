@@ -74,9 +74,10 @@ def Delivery_home(request):
 			if form.is_valid():
 				mob = form.save(commit = False)
 				try:
-					customer = Delivery_Customer.objects.filter(mobile=mob.mobile)[:1].get()
+					this_customer = Delivery_Customer.objects.filter(mobile=mob.mobile)[:1].get()
 					customer_address = Delivery_Customer.objects.filter(mobile = mob.mobile)
-					context = {'customer_address':customer_address,'all_invoices':all_invoices}
+					customer_invoices = Delivery_Invoice.objects.filter(customer__mobile = mob.mobile)
+					context = {'customer_address':customer_address,'all_invoices':all_invoices,"customer_invoices":customer_invoices}
 					return render(request,'Delivery/delivery_home.html',context)
 				except Delivery_Customer.DoesNotExist:
 					customer = Delivery_Customer()
@@ -135,6 +136,7 @@ def Delivery_add_invoice(request,customer_id):
 			new_inv = Delivery_Invoice()
 			new_inv.customer = customer
 			new_inv.date = datetime.now()
+			new_inv.is_shipped = False
 			new_inv.is_closed = False
 			new_inv.total_price = 0
 			new_inv.save()
@@ -265,9 +267,35 @@ def Delivery_close_invoice(request,inv_id):
 			inv_items = Delivery_Invoice_Items.objects.filter(invoice_id = inv_id)
 			for x in inv_items:
 				inv_total += x.total_price
+			selected_inv.total_price = inv_total
+			selected_inv.save()
 			return redirect('../Categories/')
 		else:
 			return render(request,'BASE/forbidden.html')
+
+def Delivery_shipping(request,inv_id):
+	if not request.user.is_authenticated():
+		return render(request,'BASE/login.html')
+	else:
+		if perm(request,request.user,"is_delivery_admin") == True:
+			this_entry = Delivery_Invoice.objects.get(pk = inv_id)
+			delivery_pilots = User_Admin.objects.filter(is_delivery_pilot = True)
+			form = Shipping_Form(request.POST or None, instance=this_entry)
+			if form.is_valid():	
+				shipped_with = request.POST.get("shipped_with")
+				pilot = User_Admin.objects.get(pk = shipped_with)
+				this_inv = Delivery_Invoice.objects.get(pk = inv_id)
+				this_inv.is_shipped = True
+				this_inv.shipped_with = pilot
+				this_inv.shipping_date = datetime.now()
+				pilot.credit -= this_inv.total_price
+				this_inv.save()
+				pilot.save()
+				return redirect('/ERP/')
+			else:
+				context = {'form':form,'this_entry':this_entry,"delivery_pilots":delivery_pilots}
+				return render(request,'Delivery/delivery_shipping.html',context)
+				
 
 def Delivery_print_invoice(request,inv_id):
 	if not request.user.is_authenticated():

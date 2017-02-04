@@ -19,5 +19,10 @@ class Delivery_CustomerForm(forms.ModelForm):
 class Delivery_Edit_CustomerForm(forms.ModelForm):
     class Meta:
         model = Delivery_Customer
-        fields = ['address']
-        labels = { 'address': _('العنوان')}
+        fields = ['address','mobile2','comment']
+        labels = { 'address': _('العنوان'),'mobile2':_('موبايل آخر'), 'comment':_('ملاحظات')}
+
+class Shipping_Form(forms.ModelForm):
+    class Meta:
+        model = Delivery_Invoice
+        fields = ['shipped_with']

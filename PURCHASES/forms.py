@@ -20,7 +20,7 @@ class Supplier_Form(forms.ModelForm):
     class Meta:
         model = Supplier
         fields = ['name','mobile','address','mail']
-        labels = { 'name': _('التصنيف'),'mobile': _('الكمية'),'address': _('تعليق'),'mail': _('البريد الالكتروني')}
+        labels = { 'name': _('الاسم'),'mobile': _('الموبايل'),'address': _('العنوان'),'mail': _('البريد الالكتروني')}
 
 class Supplier_Transaction_Form(forms.ModelForm):
     class Meta:

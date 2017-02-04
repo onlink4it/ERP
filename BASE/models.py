@@ -3,6 +3,9 @@ from django.contrib.auth.models import Permission, User
 
 
 # Create your models here.
+class Brand(models.Model):
+	name = models.CharField(max_length = 64)
+
 class Item_Category(models.Model):
 	name = models.CharField(max_length = 64)
 	def __str__(self):
@@ -11,12 +14,19 @@ class Item_Category(models.Model):
 class Item(models.Model):
 	category = models.ForeignKey(Item_Category, on_delete = models.CASCADE)
 	name = models.CharField(max_length = 64)
+	brand = models.ForeignKey(Brand, on_delete = models.CASCADE, default = 1)
 	price = models.FloatField(blank = True , null= True)
+	pic = models.FileField(default = "")
+	stock_managed = models.BooleanField(default = False)
+	critical_stock = models.FloatField(default = 0)
+	add_to_website = models.BooleanField(default = False)
 	def __str__(self):
 		return self.category.name + " - " + self.name + " - " + str(self.price)
 
+
 class User_Admin(models.Model):
 	user = models.ForeignKey(User, on_delete = models.CASCADE,unique = True)
+	mobile = models.CharField(max_length = 16,default = "")
 	credit = models.FloatField(blank = True , null = True ,default = 0)
 	#0
 	is_pos_employee = models.BooleanField(default = False)
@@ -39,6 +49,7 @@ class User_Admin(models.Model):
 	#9
 	is_accounts_admin = models.BooleanField(default = False)
 	is_superuser = models.BooleanField(default = False)
+	is_delivery_pilot = models.BooleanField(default = False)
 	def __str__(self):
 		return self.user.username
 

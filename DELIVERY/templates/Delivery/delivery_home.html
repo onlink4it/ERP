@@ -35,6 +35,40 @@
 			</div>
 		</div>
 	</div>
+	<div class="container container-fluid col-md-12">
+		<div class="box box-info">
+			<div class="box-header">
+			<h4 class="box-title">عرض  جميع طلبات العميل  </h4>
+			</div>
+			<div class="box-body">
+				<table id="example2" class="table table-hover">
+					<thead>
+						<tr>
+							<th>رقم الفاتورة </th>
+							<th> رقم موبايل العميل</th>
+							<th>التاريخ</th>
+							<th>إجمالي الفاتورة</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for x in customer_invoices %}
+							<tr>
+								<td>{{x.id}}</td>
+								<td>{{x.customer.mobile}}</td>
+								<td>{{x.date}}</td>
+								<td>{{x.total_price}}</td>
+								<td>
+									<a href="{% url 'DELIVERY:delivery_print_invoice' x.id %}" target="_blank" class="btn btn-warning"><i class="fa fa-print"></i></a>
+									<a href="{% url 'DELIVERY:delivery_delete_invoice' x.id %}" class="btn btn-danger"><i class="fa fa-remove"></i></a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 {% endif %}
 	<div class="container container-fluid col-md-6 pull-right">
 		<div class="box box-success">
@@ -105,10 +139,13 @@
 							<tr>
 								<td>{{x.id}}</td>
 								<td>{{x.customer.mobile}}</td>
-								<td>{% if x.is_closed == True %} <small class="label label-success">Closed</small>{% endif %} {% if x.is_closed == False %} <small class="label label-danger">Opened</small> {% endif %}</td>
+								<td>{% if x.is_closed == True %} <small class="label label-success" title="{{x.date}}">Closed</small>{% endif %} {% if x.is_closed == False %} <small class="label label-danger">Opened</small> {% endif %}
+								{% if x.is_shipped == True %} <small class="label label-success" title="{{x.shipped_with.mobile}} - {{x.shipping_date}}"><i class="fa fa-truck"></i> {{x.shipped_with.user.first_name}} {{x.shipped_with.user.last_name}}</small>{% endif %} {% if x.is_shipped == False %} <small class="label label-danger"><i class="fa fa-truck"></i></small> {% endif %}</td>
+
 								<td>
 									<a href="{% url 'DELIVERY:delivery_categories' x.id %}" class="btn btn-success"><i class="fa fa-list"></i></a>
 									<a href="{% url 'DELIVERY:delivery_delete_invoice' x.id %}" class="btn btn-danger"><i class="fa fa-remove"></i></a>
+									{% if x.is_shipped == False %} <a href="{% url 'DELIVERY:delivery_shipping' x.id %}"><small class="label label-warning"><i class="fa fa-truck"></i></small></a> {% endif %}
 								</td>
 							</tr>
 						{% endfor %}
