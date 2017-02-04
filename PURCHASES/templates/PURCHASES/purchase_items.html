@@ -53,7 +53,19 @@
 					</tbody>
 				</table>
 				{% if this_inv.delivered == False %}
-				<a href="{% url 'PURCHASES:purchase_invoice_delivered' this_inv.id %}" class="btn btn-success col-md-12">استلام</a>
+				<form action="{% url 'PURCHASES:purchase_invoice_delivered' this_inv.id %}" method="POST">
+				{% if error_message %}
+					<div class="callout callout-danger"><p><strong>{{ error_message }}</strong></p></div>	
+				{% endif %}
+				{% csrf_token %}
+					<select name="warehouse" class="form-control">
+						<option value="">اختر المخزن</option>
+						{% for x in all_warehouses %}
+							<option value="{{x.id}}">{{x.name}}</option>
+						{% endfor %}
+					</select>
+					<button type="submit" class="btn btn-success col-md-12">استلام</button>
+				</form>
 				{% endif %}
 				{% if this_inv.delivered == True %}
 				<a href="{% url 'PURCHASES:purchase_print_invoice' this_inv.id %}" target="_blank" class="btn btn-warning col-md-12">طباعة</a>
