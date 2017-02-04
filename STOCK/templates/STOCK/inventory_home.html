@@ -1,0 +1,32 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+
+	<div class="container container-fluid col-md-12">
+		<div class="box box-info">
+			<div class="box-header">
+			<h4 class="box-title">عرض كل المخزون</h4>
+			</div>
+			<div class="box-body">
+				<table id="example1" class="table table-hover">
+					<thead>
+						<tr>
+							<th>اسم المخزن</th>
+							<th>عنوان المخزن</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for x in all_entries %}
+							<tr>
+								<td>{{x.name}}</td>
+								<td>{{x.address}}</td>
+								<td><a class="btn btn-warning" href="{% url 'STOCK:print_inventory' x.id %}" target="_blank"><i class="fa fa-print"></i></a></td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

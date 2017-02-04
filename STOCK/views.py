@@ -123,3 +123,21 @@ def stock_search(request):
 			return render(request,'STOCK/stock_search.html',context)
 		context = {"form":form}
 		return render(request,'STOCK/stock_search.html',context)
+
+def inventory_home(request):
+	if not request.user.is_authenticated():
+		return render(request,'BASE/login.html')
+	else:
+		all_entries = Warehouse.objects.all()
+		context = {'all_entries':all_entries}
+		return render(request,'STOCK/inventory_home.html',context)
+
+def inventory_print(request,warehouse_id):
+	if not request.user.is_authenticated():
+		return render(request,'BASE/login.html')
+	else:
+		this_entry = Warehouse.objects.get(pk = warehouse_id)
+		all_entries = Warehouse_Stock.objects.filter(warehouse__id = warehouse_id)
+		date = datetime.now()
+		context = {'all_entries':all_entries,'this_entry':this_entry,'date':date}
+		return render(request,'STOCK/inventory_print.html',context)

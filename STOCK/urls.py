@@ -13,4 +13,9 @@ urlpatterns = [
     url(r'^Transfer/$', views.stock_transfer , name="stock_transfer"),
     url(r'^Warehouses/$', views.stock_warehouse , name="stock_warehouse"),
     url(r'^Recieve/(?P<trans_id>[0-9]+)/', views.stock_recieve_transfer, name="stock_recieve_transfer"),
+    url(r'^Inventory/$',views.inventory_home, name = "inventory"),
+    url(r'^Inventory/(?P<warehouse_id>[0-9]+)/Print/$',views.inventory_print, name = "print_inventory"),
+
 ]
+
+

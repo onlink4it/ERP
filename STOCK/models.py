@@ -9,14 +9,12 @@ class Warehouse(models.Model):
 	def __str__(self):
 		return self.name + self.location
 
-
 class Warehouse_Stock(models.Model):
 	warehouse = models.ForeignKey(Warehouse,on_delete=models.CASCADE)
 	item = models.ForeignKey(Item,on_delete = models.CASCADE)
 	quantity = models.IntegerField(blank = True , null = True , default = 0)
 	def __str__(self):
 		return self.warehouse.name + " - " + self.item.name + " - " + str(self.quantity)
-
 
 class Warehouse_Transfer_Transaction(models.Model):
 	from_warehouse = models.ForeignKey(Warehouse,on_delete=models.CASCADE,related_name="source")
