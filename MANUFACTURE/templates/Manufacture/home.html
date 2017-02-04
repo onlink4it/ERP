@@ -1,0 +1,26 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+<div class="mainmenu">
+	<a href="{% url 'MANUFACTURE:new_order' %}">
+		<div class="menuitem" style="background-color:maroon;">
+			<div class="icon">
+				<i class="fa fa-hourglass-start"></i>
+			</div>
+			<div class="text">
+				بدء دورة تصنيع
+			</div>
+		</div>
+	</a>
+	<a href="{% url 'MANUFACTURE:production_report' %}">
+		<div class="menuitem" style="background-color:maroon;">
+			<div class="icon">
+				<i class="fa fa-calendar"></i>
+			</div>
+			<div class="text">
+				تقارير الإنتاج 
+			</div>
+		</div>
+	</a>	
+
+</div>
+{% endblock %}

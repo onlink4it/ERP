@@ -1,0 +1,57 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+	<div class="container container-fluid col-md-6 pull-right">
+		<div class="box box-success">
+			<div class="box-header">
+			<h4 class="box-title">{{title}}</h4>
+			</div>
+			<div class="box-body">
+				{% if error_message %}
+					<div class="callout callout-danger"><p><strong>{{ error_message }}</strong></p></div>	
+				{% endif %}
+				<form  role="form" action="" method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+				{% include 'BASE/form_template.html' %}
+				<button class="btn btn-success">إضافة</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="container container-fluid col-md-6">
+		<div class="box box-info">
+			<div class="box-header">
+			<h4 class="box-title">عرض جميع دورات  التصنيع</h4>
+			</div>
+			<div class="box-body">
+				<table id="example1" class="table table-hover">
+					<thead>
+						<tr>
+							<th>رقم امر التصنيع</th>
+							<th>من مخزن</th>
+							<th>إلي مخزن</th>
+							<th>تاريخ البدء</th>
+							<th>تاريخ الانتهاء</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for x in all_entries %}
+							<tr>
+								<td>{{x.id}}</td>
+								<td>{{x.from_stock.name}}</td>
+								<td>{{x.to_stock.name}}</td>
+								<td>{% if x.start_date %}{{x.start_date}}{% else %}<i class="fa fa-spinner"></i>{% endif %}</td>
+								<td>{% if x.finish_date %}{{x.finish_date}}{% else %}<i class="fa fa-spinner"></i>{% endif %}</td>
+								<td>
+									<a href="{% url 'MANUFACTURE:raw_materials' x.id %}" class="btn btn-info">المواد الخام</a>
+									<a href="{% url 'MANUFACTURE:end_products' x.id %}" class="btn btn-success">الإنتاج </a>
+									<a href="{% url 'MANUFACTURE:delete_order' x.id %}" class="btn btn-danger"><i class="fa fa-remove"></i></a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}

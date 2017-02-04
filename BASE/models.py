@@ -14,10 +14,12 @@ class Item_Category(models.Model):
 class Item(models.Model):
 	category = models.ForeignKey(Item_Category, on_delete = models.CASCADE)
 	name = models.CharField(max_length = 64)
-	brand = models.ForeignKey(Brand, on_delete = models.CASCADE, default = 1)
+	brand = models.ForeignKey(Brand, on_delete = models.CASCADE, default = 1,null = True, blank= True)
 	price = models.FloatField(blank = True , null= True)
 	pic = models.FileField(default = "")
 	stock_managed = models.BooleanField(default = False)
+	raw_material = models.BooleanField(default = False)
+	produced_item = models.BooleanField(default = False)
 	critical_stock = models.FloatField(default = 0)
 	add_to_website = models.BooleanField(default = False)
 	def __str__(self):

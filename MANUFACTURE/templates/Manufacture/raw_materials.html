@@ -1,0 +1,77 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+{% if order.is_started == False %}
+	<div class="container container-fluid col-md-6 pull-right">
+		<div class="box box-success">
+			<div class="box-header">
+			<h4 class="box-title">{{title}}</h4>
+			</div>
+			<div class="box-body">
+				{% if error_message %}
+					<div class="callout callout-danger"><p><strong>{{ error_message }}</strong></p></div>	
+				{% endif %}
+				<form  role="form" action="" method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+				<label class="form-label">المنتج</label>
+				<select name="item" class="form-control">
+				{% for x in all_items %}
+					<option value='{{x.id}}'>{{x.name}}</option>
+				{% endfor %}
+				</select>
+				{% include 'BASE/form_template.html' %}
+				<button class="btn btn-success">إضافة</button>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endif %}
+	<div class="container container-fluid col-md-6">
+		<div class="box box-info">
+			<div class="box-header">
+			<h4 class="box-title">عرض المواد الخام </h4>
+			</div>
+			<div class="box-body">
+				<table id="example1" class="table table-hover">
+					<thead>
+						<tr>
+							<th>المنتج</th>
+							<th>الكمية</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for x in order_items %}
+							<tr>
+								<td>{{x.item.name}}</td>
+								<td>
+									{{x.amount}}
+
+								</td>
+								<td>
+									{% if order.is_started == False %}<a href="{% url 'MANUFACTURE:delete_raw_materials' x.order.id x.id %}" class="btn btn-danger"><i class="fa fa-remove"></i></a>{% endif %}
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% if order.is_started == False %}
+				<form action="" method="POST">
+				{% if error_message %}
+					<div class="callout callout-danger"><p><strong>{{ error_message }}</strong></p></div>	
+				{% endif %}
+				{% csrf_token %}
+					<a href="{% url 'MANUFACTURE:start_production' order.id %}" class="btn btn-success col-md-12">بدء</a>
+				</form>
+				{% endif %}
+				{% if order.is_started == True %}
+				<a href="#" target="_blank" class="btn btn-warning col-md-12">طباعة</a>
+				<a href="{% url 'MANUFACTURE:end_products' order.id %}" target="_blank" class="btn btn-info col-md-12">الانتاج</a>
+				{% endif %}
+				{% if error_message %}
+					<div class="callout callout-danger"><p><strong>{{ error_message }}</strong></p></div>	
+				{% endif %}
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

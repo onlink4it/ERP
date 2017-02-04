@@ -1,0 +1,53 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+	<div class="container container-fluid col-md-6">
+		<div class="box box-info">
+			<div class="box-header">
+			<h4 class="box-title">عرض جميع المواد الخام </h4>
+			</div>
+			<div class="box-body">
+				<table id="example1" class="table table-hover">
+					<thead>
+						<tr>
+							<th>المنتج</th>
+							<th>الكمية</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for x in all_raw %}
+							<tr>
+								<td>{{x.item.name}}</td>
+								<td>{{x.amount}}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="container container-fluid col-md-6">
+		<div class="box box-info">
+			<div class="box-header">
+			<h4 class="box-title">عرض الانتاج  </h4>
+			</div>
+			<div class="box-body">
+				<table id="example2" class="table table-hover">
+					<thead>
+						<tr>
+							<th>المنتج</th>
+							<th>الكمية</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for x in all_end %}
+							<tr>
+								<td>{{x.item.name}}</td>
+								<td>{{x.amount}}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}

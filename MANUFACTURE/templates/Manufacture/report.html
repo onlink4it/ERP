@@ -1,0 +1,39 @@
+{% extends 'BASE/base.html' %}
+{% block body %}	
+	<div class="container container-fluid col-md-12">
+		<div class="box box-info">
+			<div class="box-header">
+			<h4 class="box-title">عرض تقارير  التصنيع</h4>
+			</div>
+			<div class="box-body">
+				<table id="example1" class="table table-hover">
+					<thead>
+						<tr>
+							<th>رقم امر التصنيع</th>
+							<th>من مخزن</th>
+							<th>إلي مخزن</th>
+							<th>تاريخ البدء</th>
+							<th>تاريخ الانتهاء</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for x in all_entries %}
+							<tr>
+								<td>{{x.id}}</td>
+								<td>{{x.from_stock.name}}</td>
+								<td>{{x.to_stock.name}}</td>
+								<td>{% if x.start_date %}{{x.start_date}}{% else %}<i class="fa fa-spinner"></i>{% endif %}</td>
+								<td>{% if x.finish_date %}{{x.finish_date}}{% else %}<i class="fa fa-spinner"></i>{% endif %}</td>
+								<td>
+									<a href="{% url 'MANUFACTURE:raw_materials' x.id %}" class="btn btn-warning" target="_blank"><i class="fa fa-print"></i></a>
+									<a href="{% url 'MANUFACTURE:detailed_report' x.id %}" class="btn btn-info"><i class="fa fa-desktop"></i></a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}

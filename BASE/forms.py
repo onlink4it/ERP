@@ -13,8 +13,9 @@ class Item_Category_Form(forms.ModelForm):
 class Item_Form(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ['category','name','price','stock_managed','add_to_website',]
-        labels = { 'category': _('التصنيف'),'name': _('اسم المنتج'),'price': _('السعر'),'stock_managed':_('إدارة المخزون لهذا المنتج'),'add_to_website':_('إضافة إلي الموقع')}
+        fields = ['category','name','price','stock_managed','add_to_website','raw_material','produced_item']
+        labels = { 'category': _('التصنيف'),'name': _('اسم المنتج'),'price': _('السعر'),'stock_managed':_('إدارة المخزون لهذا المنتج'),
+            'add_to_website':_('إضافة إلي الموقع'), 'raw_material':_('هذا المنتج مادة خام') , 'produced_item':_('هذا المنتج نقوم بتصنيعه')}
 
 class Expense_Category_Form(forms.ModelForm):
     class Meta:
