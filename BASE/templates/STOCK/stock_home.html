@@ -1,0 +1,55 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+<div class="mainmenu">
+	<a href="{% url 'BASE:stock_add' %}">
+		<div class="menuitem" style="background-color:purple;">
+			<div class="icon">
+				<i class="fa fa-plus-square"></i>
+			</div>
+			<div class="text">
+				إضافة  مخزون
+			</div>
+		</div>
+	</a>	
+	<a href="{% url 'BASE:stock_transfer' %}">
+		<div class="menuitem" style="background-color:purple;">
+			<div class="icon">
+				<i class="fa fa-exchange"></i>
+			</div>
+			<div class="text">
+				التحويلات  
+			</div>
+		</div>
+	</a>	
+	<a href="{% url 'BASE:stock_search' %}">
+		<div class="menuitem" style="background-color:purple;">
+			<div class="icon">
+				<i class="fa fa-search"></i>
+			</div>
+			<div class="text">
+				بحث عن منتج  
+			</div>
+		</div>
+	</a>	
+	<a href="{% url 'BASE:stock_warehouse' %}">
+		<div class="menuitem" style="background-color:purple;">
+			<div class="icon">
+				<i class="fa fa-university"></i>
+			</div>
+			<div class="text">
+				إدارة المخازن  
+			</div>
+		</div>
+	</a>	
+	<a href="{% url 'BASE:inventory' %}">
+		<div class="menuitem" style="background-color:purple;">
+			<div class="icon">
+				<i class="fa fa-list-ul"></i>
+			</div>
+			<div class="text">
+				جرد المخازن  
+			</div>
+		</div>
+	</a>	
+</div>
+{% endblock %}

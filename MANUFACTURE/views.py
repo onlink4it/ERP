@@ -5,7 +5,6 @@ from django.urls import reverse
 from django import forms
 from .models import *
 from BASE.models import *
-from STOCK.models import *
 from .forms import *
 from django.shortcuts import render,get_object_or_404,redirect
 # Create your views here.

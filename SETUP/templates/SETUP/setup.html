@@ -1,0 +1,21 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+	<div class="container container-fluid col-md-12">
+		<div class="box box-success">
+			<div class="box-header">
+			<h4 class="box-title">تهيئة النظام</h4>
+			</div>
+			<div class="box-body">
+				{% if error_message %}
+					<div class="callout callout-danger"><p><strong>{{ error_message }}</strong></p></div>	
+				{% endif %}
+				<form  role="form" action="" method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+				{% include 'SETUP/form_template.html' %}
+				<button class="btn btn-success">إضافة</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

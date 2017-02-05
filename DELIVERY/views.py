@@ -183,6 +183,14 @@ def Delivery_add_item(request,inv_id,item_id):
 			add_item.invoice_id = selected_inv
 			add_item.item = selected_item
 			add_item.quantity = 1
+			if selected_item.stock_managed == True:
+				warehouse = get_warehouse(request,request.user)
+				if warehouse_has_stock(request,warehouse,add_item.item,add_item.quantity) == False:
+					error_message = "لا يوجد مخزون كافي من المنتج " + add_item.item.name
+					context = {"error_message":error_message}
+					return render(request,'BASE/error.html',context)
+				else:			
+					pass
 			add_item.unit_price = selected_item.price
 			add_item.total_price = selected_item.price * 1
 			add_item.save()
@@ -199,6 +207,14 @@ def Delivery_increase_quantity(request,inv_id,inv_item_id):
 		if perm(request,request.user,"is_delivery_taker") == True or perm(request,request.user,"is_delivery_admin") == True:
 			selected_item = Delivery_Invoice_Items.objects.get(pk=inv_item_id)
 			selected_item.quantity += 1
+			if selected_item.item.stock_managed == True:
+				warehouse = get_warehouse(request,request.user)
+				if warehouse_has_stock(request,warehouse,selected_item.item,selected_item.quantity) == False:
+					error_message = "لا يوجد مخزون كافي من المنتج " + selected_item.item.name
+					context = {"error_message":error_message}
+					return render(request,'BASE/error.html',context)
+				else:
+					pass
 			selected_item.total_price += selected_item.unit_price
 			selected_item.save()
 			return redirect('../../Categories/')

@@ -1,6 +1,5 @@
 from django.db import models
 from BASE.models import *
-from STOCK.models import *
 from datetime import datetime
 # Create your models here.
 class Production_Order(models.Model):

@@ -21,5 +21,16 @@ urlpatterns = [
     url(r'^System_Setting/Products/(?P<product_id>[0-9]+)/Edit/$', views.edit_product, name = "edit_product"),
     url(r'^System_Setting/Employees/$',views.user_accounts, name="user_accounts"),
     url(r'^System_Setting/Employees/(?P<user_id>[0-9]+)/$',views.user_perm, name="user_perm"),
+    url(r'^Branches/$',views.create_branch,name="branches"),
+    url(r'^Branches/(?P<link_id>[0-9]+)/Delete/$',views.delete_branch,name="delete_branch"),
+    url(r'^Branches/Choose/$',views.choose_branch,name="choose_branch"),
+    url(r'^Stock/$', views.stock_home , name="stock"),
+    url(r'^Stock/Add/$', views.stock_add , name="stock_add"),
+    url(r'^Stock/Search/$', views.stock_search , name="stock_search"),
+    url(r'^Stock/Transfer/$', views.stock_transfer , name="stock_transfer"),
+    url(r'^Stock/Warehouses/$', views.stock_warehouse , name="stock_warehouse"),
+    url(r'^Stock/Recieve/(?P<trans_id>[0-9]+)/', views.stock_recieve_transfer, name="stock_recieve_transfer"),
+    url(r'^Stock/Inventory/$',views.inventory_home, name = "inventory"),
+    url(r'^Stock/Inventory/(?P<warehouse_id>[0-9]+)/Print/$',views.inventory_print, name = "print_inventory"),
 
     ]

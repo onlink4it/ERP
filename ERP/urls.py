@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^POS/',include('POS.urls')),
     url(r'^Delivery/',include('DELIVERY.urls')),
     url(r'^Purchases/', include('PURCHASES.urls')),
-    url(r'^Stock/',include('STOCK.urls')),
     url(r'^Reports/',include('REPORTS.urls')),
     url(r'^Manufacture/',include('MANUFACTURE.urls')),
+    url(r'^SETUP/',include('SETUP.urls')),
 ]

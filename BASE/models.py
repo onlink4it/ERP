@@ -18,6 +18,7 @@ class Item(models.Model):
 	price = models.FloatField(blank = True , null= True)
 	pic = models.FileField(default = "")
 	stock_managed = models.BooleanField(default = False)
+	for_sale = models.BooleanField(default = False)
 	raw_material = models.BooleanField(default = False)
 	produced_item = models.BooleanField(default = False)
 	critical_stock = models.FloatField(default = 0)
@@ -74,4 +75,46 @@ class Expense_Transaction(models.Model):
 class System_Setting(models.Model):
 	company_name = models.CharField(max_length = 64, default = "")
 	company_logo = models.FileField()
-	pos_from_stock = models.BooleanField(default = False)
+
+
+class Warehouse(models.Model):
+	name = models.CharField(max_length = 64)
+	location = models.CharField(max_length = 512,null=True,blank= True)
+	def __str__(self):
+		return str(self.name) + " - " + str(self.location)
+
+class Warehouse_Stock(models.Model):
+	warehouse = models.ForeignKey(Warehouse,on_delete=models.CASCADE)
+	item = models.ForeignKey(Item,on_delete = models.CASCADE)
+	quantity = models.IntegerField(blank = True , null = True , default = 0)
+	def __str__(self):
+		return self.warehouse.name + " - " + self.item.name + " - " + str(self.quantity)
+
+class Warehouse_Transfer_Transaction(models.Model):
+	from_warehouse = models.ForeignKey(Warehouse,on_delete=models.CASCADE,related_name="source")
+	to_warehouse = models.ForeignKey(Warehouse,on_delete=models.CASCADE,related_name="target")
+	item = models.ForeignKey(Item,on_delete = models.CASCADE)
+	quantity = models.IntegerField(blank = True , null = True , default = 0)
+	user = models.ForeignKey(User,on_delete=models.CASCADE,related_name = "sent_by")
+	is_recieved = models.BooleanField(default = False)
+	recieved_by = models.ForeignKey(User, null = True,on_delete = models.CASCADE, related_name = "recieved_by")
+
+class Branch(models.Model):
+	name = models.CharField(max_length=64)
+	address = models.CharField(max_length=512)
+	phone = models.CharField(max_length = 16)
+	def get_warehouse(self):
+		branch_stock = Branch_Stock.objects.get(branch = self)
+		warehouse = branch_stock.warehouse
+		return warehouse
+	def __str__(self):
+		return self.name
+
+class Branch_Stock(models.Model):
+	branch = models.ForeignKey(Branch, on_delete = models.SET_NULL, null = True)
+	warehouse = models.ForeignKey(Warehouse, on_delete = models.CASCADE)
+
+class Branch_Users(models.Model):
+	branch = models.ForeignKey(Branch, on_delete = models.CASCADE)
+	user = models.ForeignKey(User, on_delete = models.CASCADE, unique = True)
+	warehouse = models.ForeignKey(Warehouse, on_delete = models.CASCADE)

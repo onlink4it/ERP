@@ -1,0 +1,53 @@
+{% extends 'BASE/base.html' %}
+{% block body %}
+	<div class="container container-fluid col-md-6 pull-right">
+		<div class="box box-success">
+			<div class="box-header">
+			<h4 class="box-title">إضافة فرع</h4>
+			</div>
+			<div class="box-body">
+				{% if error_message %}
+					<div class="callout callout-danger"><p><strong>{{ error_message }}</strong></p></div>	
+				{% endif %}
+				<form  role="form" action="" method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+				{% include 'BASE/form_template.html' %}
+				<button class="btn btn-success">إضافة</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="container container-fluid col-md-6">
+		<div class="box box-info">
+			<div class="box-header">
+			<h4 class="box-title">عرض جميع الفروع </h4>
+			</div>
+			<div class="box-body">
+				<table id="example1" class="table table-hover">
+					<thead>
+						<tr>
+							<th>رقم الفرع</th>
+							<th>اسم الفرع</th>
+							<th>العنوان</th>
+							<th>رقم المخزن</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for x in all_entries %}
+							<tr>
+								<td>{{x.branch.id}}</td>
+								<td>{{x.branch.name}}</td>
+								<td>{{x.branch.address}}</td>
+								<td>{{x.warehouse.id}}</td>
+								<td>
+									<a href="{% url 'BASE:delete_branch' x.branch.id %}" class="btn btn-danger"><i class="fa fa-remove"></i></a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}

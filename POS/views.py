@@ -162,6 +162,14 @@ def POS_add_item(request,inv_id,item_id):
 			add_item.invoice = selected_inv
 			add_item.item = selected_item
 			add_item.quantity = 1
+			if selected_item.stock_managed == True:
+				warehouse = get_warehouse(request,request.user)
+				if warehouse_has_stock(request,warehouse,add_item.item,add_item.quantity) == False:
+					error_message = "لا يوجد مخزون كافي من المنتج " + add_item.item.name
+					context = {"error_message":error_message}
+					return render(request,'BASE/error.html',context)
+				else:			
+					pass
 			add_item.unit_price = selected_item.price
 			add_item.total_price = selected_item.price * 1
 			add_item.save()
@@ -179,6 +187,14 @@ def POS_increase_quantity(request,inv_id,inv_item_id):
 		if perm(request,request.user,"is_pos_employee") == True or perm(request,request.user,"is_pos_admin") == True:
 			selected_item = POS_Invoice_Items.objects.get(pk=inv_item_id)
 			selected_item.quantity += 1
+			if selected_item.item.stock_managed == True:
+				warehouse = get_warehouse(request,request.user)
+				if warehouse_has_stock(request,warehouse,selected_item.item,selected_item.quantity) == False:
+					error_message = "لا يوجد مخزون كافي من المنتج " + selected_item.item.name
+					context = {"error_message":error_message}
+					return render(request,'BASE/error.html',context)
+				else:
+					pass
 			selected_item.total_price += selected_item.unit_price
 			selected_item.save()
 			return redirect('../../Categories/')
@@ -206,7 +222,7 @@ def POS_delete_invoice_item(request,inv_id,inv_item_id):
 	else:
 		if perm(request,request.user,"is_pos_employee") == True or perm(request,request.user,"is_pos_admin") == True:
 			selected_item = POS_Invoice_Items.objects.get(pk=inv_item_id)
-			if selected_item.is_closed == False:
+			if selected_item.invoice.is_closed == False:
 				selected_item.delete()
 				return redirect('../../Categories/')
 			else:
@@ -226,6 +242,20 @@ def POS_delete_invoice(request,inv_id):
 		else:
 			return render(request,'BASE/forbidden.html')
 
+def get_warehouse(request,user):
+	branch_for_user = Branch_Users.objects.get(user = user)
+	warehouse = branch_for_user.branch.get_warehouse()
+	return warehouse
+
+def warehouse_has_stock(request,selected_warehouse,selected_item,selected_quantity):
+	try:
+		warehouse_stock = Warehouse_Stock.objects.get(warehouse = selected_warehouse,item = selected_item)
+		if warehouse_stock.quantity >= selected_quantity:
+			return True
+		else: 
+			return False
+	except Warehouse_Stock.DoesNotExist:
+		return False
 
 def POS_close_invoice(request,inv_id):
 	if not request.user.is_authenticated():
@@ -233,14 +263,26 @@ def POS_close_invoice(request,inv_id):
 	else:
 		if perm(request,request.user,"is_pos_employee") == True or perm(request,request.user,"is_pos_admin") == True:
 			selected_inv = POS_Invoice.objects.get(pk=inv_id)
+			if selected_inv.is_closed == True:
+				context
 			selected_inv.is_closed = True
-			selected_inv.save()
 			selected_customer = POS_Customer.objects.get(id = selected_inv.customer.id)
 			inv_total = 0.0
 			inv_items = POS_Invoice_Items.objects.filter(invoice = inv_id)
 			for x in inv_items:
 				inv_total += x.total_price
+				if x.item.stock_managed == True:
+					warehouse = get_warehouse(request,request.user)
+					if warehouse_has_stock(request,warehouse,x.item,x.quantity) == False:
+						error_message = "لا يوجد مخزون كافي من المنتج " + x.item.name
+						context = {"error_message":error_message}
+						return render(request,'BASE/error.html',context)
+					else:
+						warehouse_stock = Warehouse_Stock.objects.get(warehouse = warehouse,item = x.item)
+						warehouse_stock.quantity -= x.quantity
+						warehouse_stock.save()
 			selected_customer.credit -= inv_total
+			selected_inv.save()
 			selected_customer.save()
 			return redirect('../Categories/')
 		else:

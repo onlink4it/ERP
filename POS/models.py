@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import Permission, User
 from BASE.models import *
 
-
 # Create your models here.
 class POS_Customer(models.Model):
 	name = models.CharField(max_length = 64)
@@ -23,6 +22,7 @@ class POS_Invoice(models.Model):
 
 class POS_Invoice_Items(models.Model):
 	invoice = models.ForeignKey(POS_Invoice, on_delete = models.CASCADE)
+	branch = models.ForeignKey(Branch, on_delete = models.CASCADE)
 	item = models.ForeignKey(Item, on_delete = models.CASCADE)
 	quantity = models.IntegerField()
 	unit_price = models.FloatField()

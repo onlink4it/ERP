@@ -47,3 +47,47 @@ class User_Admin_Form(forms.ModelForm):
                 'is_product_admin':_('مدير منتجات'),'is_invoice_admin':_('مدير الفواتير'),'is_purchases_admin':_('مدير مشتريات'),
                 'is_stock_admin':_('مدير مخزون'),'is_user_admin':_('مدير حسابات الموظفين '),'is_accounts_admin':_("مدير حسابات"),
                 'is_delivery_pilot':_('طيار دليفري'),'is_delivery_admin':_('مدير دليفري')}
+
+
+
+class Warehouse_Form(forms.ModelForm):
+    class Meta:
+        model = Warehouse
+        fields = ['name','location']
+        labels = { 'name': _('اسم المخزن'),'location': _('عنوان المخزن')}
+        
+class Warehouse_Transfer_Transaction_Form(forms.ModelForm):
+    class Meta:
+        model = Warehouse_Transfer_Transaction
+        fields = ['from_warehouse','to_warehouse','item','quantity']
+        labels = { 'from_warehouse': _('من مخزن'),'to_warehouse': _('الي مخزن'),'item': _('المنتج'),'quantity': _('الكمية')}
+
+
+class Stock_Add_Form(forms.ModelForm):
+    class Meta:
+        model = Warehouse_Stock
+        fields = ['warehouse','item','quantity']
+        labels = { 'warehouse': _('المخزن'),'item': _('اسم المنتج'),'quantity': _('الكمية')}
+
+class Stock_Search_Form(forms.ModelForm):
+    class Meta:
+        model = Warehouse_Stock
+        fields = ['item']
+        labels = { 'item': _('اسم المنتج')}
+
+
+
+
+
+class Branch_Form(forms.ModelForm):
+    class Meta:
+        model = Branch
+        fields = ['name','address','phone']
+        labels = { 'name': _('اسم الفرع'),'address': _('عنوان الفرع'),'phone':_('رقم التليفون')}
+
+
+class Choose_Branch_Form(forms.ModelForm):
+    class Meta:
+        model = Branch_Users
+        fields = ['branch']
+        labels = { 'branch': _('اسم الفرع')}
