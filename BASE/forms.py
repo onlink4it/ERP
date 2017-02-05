@@ -41,12 +41,17 @@ class User_Admin_Form(forms.ModelForm):
 
     class Meta:
         model = User_Admin
-        fields = ['is_pos_employee' ,'is_pos_admin','is_delivery_taker','is_delivery_admin','is_product_admin','is_invoice_admin','is_purchases_admin',
-        'is_stock_admin','is_user_admin','is_accounts_admin','is_delivery_pilot']
-        labels = { 'is_pos_employee': _('موظف كاشير'),'is_pos_admin': _('مدير كاشير'),'is_delivery_taker': _('دليفري تيكر'),
-                'is_product_admin':_('مدير منتجات'),'is_invoice_admin':_('مدير الفواتير'),'is_purchases_admin':_('مدير مشتريات'),
-                'is_stock_admin':_('مدير مخزون'),'is_user_admin':_('مدير حسابات الموظفين '),'is_accounts_admin':_("مدير حسابات"),
-                'is_delivery_pilot':_('طيار دليفري'),'is_delivery_admin':_('مدير دليفري')}
+        fields = ['is_pos_employee' ,'is_pos_admin','is_delivery_taker','is_delivery_pilot','is_delivery_admin','is_accounts_admin',
+            'is_product_admin','is_invoice_admin','is_user_admin','is_superuser','is_stock_admin',
+            'is_purchases_admin','is_branches_admin','is_manufacture_admin','is_reports_admin']
+        labels = {
+            'is_pos_employee':_('موظف كاشير') ,'is_pos_admin':_('مدير كاشير'),'is_delivery_taker':_('دليفري تيكر'),'is_delivery_pilot':_('طيار دليفري'),
+            'is_delivery_admin':_('مدير دليفري'),'is_accounts_admin':_('إدارة الحسابات'),
+            'is_product_admin':_('ادارة المنتجات'),'is_invoice_admin':_('ادارة الفاوتير'),
+            'is_user_admin':_('ادارة الموظفين'),'is_superuser':_('مدير البرنامج'),'is_stock_admin':_('إدارة المخزون'),
+            'is_purchases_admin':_('ادارة المشتريا'),'is_branches_admin':_('ادارة الفروع'),'is_manufacture_admin':_('دورات الانتاج'),
+            'is_reports_admin':_('إدارة التقارير')
+            }
 
 
 

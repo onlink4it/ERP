@@ -31,28 +31,29 @@ class User_Admin(models.Model):
 	user = models.ForeignKey(User, on_delete = models.CASCADE,unique = True)
 	mobile = models.CharField(max_length = 16,default = "")
 	credit = models.FloatField(blank = True , null = True ,default = 0)
-	#0
+
 	is_pos_employee = models.BooleanField(default = False)
-	#1
 	is_pos_admin = models.BooleanField(default = False)
-	#2
+
 	is_delivery_taker = models.BooleanField(default = False)
-	#3
-	is_delivery_admin = models.BooleanField(default = False)
-	#4
-	is_product_admin = models.BooleanField(default = False)
-	#5
-	is_invoice_admin = models.BooleanField(default = False) 
-	#6
-	is_purchases_admin = models.BooleanField(default = False)
-	#7
-	is_stock_admin = models.BooleanField(default = False)
-	#8
-	is_user_admin = models.BooleanField(default = False)
-	#9
-	is_accounts_admin = models.BooleanField(default = False)
-	is_superuser = models.BooleanField(default = False)
 	is_delivery_pilot = models.BooleanField(default = False)
+	is_delivery_admin = models.BooleanField(default = False)
+
+	is_accounts_admin = models.BooleanField(default = False)
+
+	is_product_admin = models.BooleanField(default = False)
+	is_invoice_admin = models.BooleanField(default = False)
+	is_user_admin = models.BooleanField(default = False)
+	is_superuser = models.BooleanField(default = False)
+
+	is_stock_admin = models.BooleanField(default = False)
+
+	is_purchases_admin = models.BooleanField(default = False)
+	is_branches_admin = models.BooleanField(default = False)
+	is_manufacture_admin = models.BooleanField(default = False)
+
+	is_reports_admin = models.BooleanField(default = False)
+
 	def __str__(self):
 		return self.user.username
 
